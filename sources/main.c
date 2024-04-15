@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 12:13:02 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/15 12:59:24 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	cross_event(t_window *window)
 
 int	key_event(int keycode, t_window *window)
 {
+	(void) keycode;
 	printf("Key pressed\n");
 	mlx_loop_end(window->mlx_context);
 	return (0);
