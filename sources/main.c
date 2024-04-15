@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 12:59:24 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/15 14:46:23 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,29 @@
 
 int	cross_event(t_window *window)
 {
-	printf("Cross clicked\n");
 	mlx_loop_end(window->mlx_context);
 	return (0);
 }
 
 int	key_event(int keycode, t_window *window)
 {
-	(void) keycode;
-	printf("Key pressed\n");
-	mlx_loop_end(window->mlx_context);
+	if (keycode == XK_Escape)
+		mlx_loop_end(window->mlx_context);
 	return (0);
 }
 
 int main()
 {
 	t_window	window;
+	t_map		map;
 
 	// TODO: check null sur les deux
-	window.mlx_context = mlx_init(); 
-	window.window = mlx_new_window(window.mlx_context, 1000, 1000, "Hello");
+	map = init_map();
+	display_map(map);
 
+	window.mlx_context = mlx_init(); 
+	window.window = mlx_new_window(window.mlx_context, map.width * 100, map.height * 100, "Hello");
+	
 	mlx_hook(window.window, DestroyNotify, 1L<<0, cross_event, &window);
 	mlx_hook(window.window, KeyPress, KeyPressMask, key_event, &window);
 	mlx_loop(window.mlx_context);

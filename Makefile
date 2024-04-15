@@ -1,6 +1,7 @@
 NAME		:= cub3D
 
-SRCS		:=	main.c
+SRCS		:=	main.c \
+				map.c
 OBJS		:= $(SRCS:.c=.o)
 
 SRCS		:= $(addprefix sources/,$(SRCS))
