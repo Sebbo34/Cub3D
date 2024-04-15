@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:25:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 15:53:47 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/15 16:18:34 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,15 @@ typedef struct s_map
 	enum e_tile_kind	*tiles;
 }	t_map;
 
+typedef struct s_rect
+{
+	uint32_t	start_x;
+	uint32_t	start_y;
+	uint32_t	width;
+	uint32_t	height;
+}	t_rect;
+
+
 t_map	init_map(void);
 void	display_map(t_map map, t_image image);
 
@@ -69,5 +78,6 @@ void	put_pixel(t_image image, uint32_t x, uint32_t y, t_color color);
 bool	create_image(void *mlx_context, t_image *image, uint32_t width,
 			uint32_t height);
 void	destroy_image(void *mlx_context, t_image image);
+void	fill_rect(t_rect rect, t_image image, t_color color);
 
 #endif
