@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cub3d.h                                            :+:      :+:    :+:   */
+/*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:25:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 16:18:34 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/15 16:34:41 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,9 @@ bool	create_image(void *mlx_context, t_image *image, uint32_t width,
 			uint32_t height);
 void	destroy_image(void *mlx_context, t_image image);
 void	fill_rect(t_rect rect, t_image image, t_color color);
+
+bool	create_window(t_window *window, uint32_t width, uint32_t height);
+void	update_window(t_window window);
+void	destroy_window(t_window window);
 
 #endif

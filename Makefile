@@ -3,13 +3,14 @@ NAME		:= cub3D
 SRCS		:=	main.c \
 				map.c \
 				rect.c \
+				window.c \
 				image.c
 OBJS		:= $(SRCS:.c=.o)
 
 SRCS		:= $(addprefix sources/,$(SRCS))
 OBJS		:= $(addprefix build/,$(OBJS))
 
-CFLAGS		:= -Wall -Wextra -Werror
+CFLAGS		:= -Wall -Wextra -Werror -g
 CPPFLAGS	:= -Iinclude -Iminilibx-linux
 LDFLAGS		:= -lX11 -lXext -Lminilibx-linux -lmlx
 

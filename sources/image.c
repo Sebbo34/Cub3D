@@ -6,11 +6,11 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:37:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 15:50:15 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/15 16:30:59 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3d.h"
+#include "cub3D.h"
 
 bool	create_image(
 	void *mlx_context, t_image *image, uint32_t width, uint32_t height
