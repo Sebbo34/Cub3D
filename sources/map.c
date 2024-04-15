@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 15:57:36 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/15 16:27:53 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,20 +31,24 @@ t_map	init_map(void)
 
 void	display_map(t_map map, t_image image)
 {
+	t_rect		rect;
 	unsigned	i;
 	unsigned	j;
 	
-	(void) image;
+	rect.width = 100;
+	rect.height = 100;
 	i = 0;
 	while (i < map.height)
 	{
+		rect.start_y = i * rect.height;
 		j = 0;
 		while (j < map.width)
 		{
-			printf("%d ", map.tiles[i * map.width + j]);
+			rect.start_x = j * rect.width;
+			if (map.tiles[i * map.width + j] == TILE_WALL)
+				fill_rect(rect, image, (t_color){.hex = 0x303030});
 			j++;
 		}
-		printf("\n");
 		i++;
 	}
 }

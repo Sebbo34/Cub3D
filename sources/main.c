@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 16:22:51 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/15 16:27:24 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@ int	main(void)
 {
 	t_window	window;
 	t_map		map;
-	t_rect		rect = {
-		50, 200, 100, 100
-	};
 
 	// TODO: check null sur les deux
 	map = init_map();
@@ -40,7 +37,6 @@ int	main(void)
 	window.window = mlx_new_window(window.mlx_context, map.width * 100, map.height * 100, "Hello");
 	create_image(window.mlx_context, &window.background, map.width * 100, map.height * 100);
 	display_map(map, window.background);
-	fill_rect(rect, window.background, (t_color){.hex = 0x00FF0000});
 	mlx_put_image_to_window(window.mlx_context, window.window, window.background.mlx_image, 0, 0);
 	mlx_hook(window.window, DestroyNotify, 1L << 0, cross_event, &window);
 	mlx_hook(window.window, KeyPress, KeyPressMask, key_event, &window);
