@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:25:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 16:34:41 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/15 18:20:29 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ typedef	union
 {
 	struct 
 	{
-		uint8_t	r;
-		uint8_t	g;
 		uint8_t	b;
+		uint8_t	g;
+		uint8_t	r;
 	};
 	uint32_t	hex;
 } t_color;
@@ -46,6 +46,14 @@ typedef struct s_window
 	void		*window;
 	t_image		background;
 }	t_window;
+
+typedef struct s_ray
+{
+	float	start_x;
+	float	start_y;
+	float	direction_x;
+	float	direction_y;
+}	t_ray;
 
 enum e_tile_kind
 {
@@ -83,5 +91,8 @@ void	fill_rect(t_rect rect, t_image image, t_color color);
 bool	create_window(t_window *window, uint32_t width, uint32_t height);
 void	update_window(t_window window);
 void	destroy_window(t_window window);
+float	ray_intersect_rect(t_ray ray, uint32_t width, uint32_t height);
+void	project_ray(t_ray ray, float dist, float *out_x, float *out_y);
+void	display_ray(t_ray ray, t_image image);
 
 #endif

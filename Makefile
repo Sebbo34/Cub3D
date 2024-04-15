@@ -4,6 +4,7 @@ SRCS		:=	main.c \
 				map.c \
 				rect.c \
 				window.c \
+				ray.c \
 				image.c
 OBJS		:= $(SRCS:.c=.o)
 
@@ -12,7 +13,7 @@ OBJS		:= $(addprefix build/,$(OBJS))
 
 CFLAGS		:= -Wall -Wextra -Werror -g
 CPPFLAGS	:= -Iinclude -Iminilibx-linux
-LDFLAGS		:= -lX11 -lXext -Lminilibx-linux -lmlx
+LDFLAGS		:= -lX11 -lXext -Lminilibx-linux -lmlx -lm
 
 all: $(NAME)
 
