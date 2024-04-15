@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 14:47:56 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/15 15:57:36 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@ t_map	init_map(void)
 	return (map);
 }
 
-void	display_map(t_map map)
+void	display_map(t_map map, t_image image)
 {
 	unsigned	i;
 	unsigned	j;
 	
+	(void) image;
 	i = 0;
 	while (i < map.height)
 	{

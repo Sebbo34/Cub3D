@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:25:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 14:45:54 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/15 15:53:47 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,32 @@
 # include <X11/X.h>
 # include <X11/keysym.h>
 # include <stdbool.h>
+# include <stdint.h>
+
+typedef	union 
+{
+	struct 
+	{
+		uint8_t	r;
+		uint8_t	g;
+		uint8_t	b;
+	};
+	uint32_t	hex;
+} t_color;
+
+typedef struct s_image
+{
+	void		*mlx_image;
+	uint32_t	width;
+	uint32_t	height;
+	t_color		*pixels;
+}	t_image;
 
 typedef struct s_window
 {
-	void	*mlx_context;
-	void	*window;
+	void		*mlx_context;
+	void		*window;
+	t_image		background;
 }	t_window;
 
 enum e_tile_kind
@@ -35,12 +56,18 @@ enum e_tile_kind
 
 typedef struct s_map
 {
-	unsigned int		width;
-	unsigned int		height;
+	uint32_t			width;
+	uint32_t			height;
 	enum e_tile_kind	*tiles;
-} t_map;
+}	t_map;
 
 t_map	init_map(void);
-void	display_map(t_map);
+void	display_map(t_map map, t_image image);
+
+void	put_pixel(t_image image, uint32_t x, uint32_t y, t_color color);
+
+bool	create_image(void *mlx_context, t_image *image, uint32_t width,
+			uint32_t height);
+void	destroy_image(void *mlx_context, t_image image);
 
 #endif
