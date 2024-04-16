@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:25:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/16 12:48:13 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/16 15:42:37 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,29 @@ typedef struct s_player
 	float	direction_y;
 } t_player;
 
+typedef struct s_keys
+{
+	bool	a;
+	bool	d;
+	bool	w;
+	bool	s;
+	bool	left;
+	bool	right;
+} t_keys;
+
 typedef struct s_key_event_context
+{
+	t_keys	*keys;
+	void	*mlx_context;
+}	t_key_event_context;
+
+typedef struct s_loop_context
 {
 	t_window	window;
 	t_map		map;
 	t_player	*player;
-}	t_key_event_context;
+	t_keys		*keys;
+}	t_loop_context;
 
 t_map	init_map(void);
 void	display_map(t_map map, t_image image);
@@ -112,8 +129,9 @@ float	ray_intersect_rect(t_ray ray, uint32_t width, uint32_t height);
 void	project_ray(t_ray ray, float dist, float *out_x, float *out_y);
 void	display_ray(t_ray ray, t_image image);
 
-int		key_event(int keycode, t_key_event_context *context);
-void	move_player(int keycode, t_player *player);
-void	turn_player(int keycode, t_player *player);
+int		key_press(int keycode, t_key_event_context *context);
+int		key_release(int keycode, t_key_event_context *context);
+void	move_player(t_keys keys, t_player *player);
+void	turn_player(t_keys keys, t_player *player);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:21:11 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/16 13:02:33 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/16 15:22:18 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	display_ray(t_ray ray, t_image image)
 
 	current_dist = 0;
 	max_distance = ray_intersect_rect(ray, image.width / TILE_SIZE, image.height / TILE_SIZE);
-	printf("Distance: %f\n", max_distance);
 	while (current_dist < max_distance - 0.5f)
 	{
 		project_ray(ray, current_dist, &pixel_x, &pixel_y);
