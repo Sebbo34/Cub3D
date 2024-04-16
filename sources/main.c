@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 18:24:38 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/16 12:50:40 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,26 +15,25 @@
 
 int	main(void)
 {
-	t_ray		ray;
-	float		dir_len;
-	t_window	window;
-	t_map		map;
+	t_window		window;
+	t_map			map;
+	t_player		player;
+	
+	player.x = 2.5f;
+	player.y = 2.5f;
+	player.direction_x = 0.0f;
+	player.direction_y = -1.0f;
 
-	ray.start_x = 300.0f;
-	ray.start_y = 200.0f;
-	ray.direction_x = 60.0f;
-	ray.direction_y = 0.0f;
-	dir_len = sqrt(ray.direction_x * ray.direction_x + ray.direction_y * ray.direction_y);
-	ray.direction_x /= dir_len;
-	ray.direction_y /= dir_len;
-
-	// TODO: check null sur les deux
 	map = init_map();
 
-	if (!create_window(&window, 100 * map.width, 100 * map.height))
+	if (!create_window(&window, TILE_SIZE * map.width, TILE_SIZE * map.height))
 		return (1);
+	mlx_hook(window.window, KeyPress, KeyPressMask, key_event, &(t_key_event_context){
+		window, map, &player
+	});
 	display_map(map, window.background);
-	display_ray(ray, window.background);
+	display_ray((t_ray){player.x, player.y,
+		player.direction_x, player.direction_y}, window.background);
 	update_window(window);
 	mlx_loop(window.mlx_context);
 	destroy_window(window);

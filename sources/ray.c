@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:21:11 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 18:20:55 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/16 13:02:33 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ float	ray_intersect_rect(t_ray ray, uint32_t width, uint32_t height)
 		return (ray_vertical_dist(ray, height));
 	if (ray.direction_y == 0)
 		return (ray_horizontal_dist(ray, width));
-	printf("Hor: %f\n", ray_horizontal_dist(ray, width));
-	printf("Ver: %f\n", ray_vertical_dist(ray, height));
 	return (ft_float_min(
 		ray_horizontal_dist(ray, width),
 		ray_vertical_dist(ray, height)
@@ -63,12 +61,12 @@ void	display_ray(t_ray ray, t_image image)
 	float	pixel_y;
 
 	current_dist = 0;
-	max_distance = ray_intersect_rect(ray, image.width, image.height);
+	max_distance = ray_intersect_rect(ray, image.width / TILE_SIZE, image.height / TILE_SIZE);
 	printf("Distance: %f\n", max_distance);
-	while (current_dist < max_distance - 20.0f)
+	while (current_dist < max_distance - 0.5f)
 	{
 		project_ray(ray, current_dist, &pixel_x, &pixel_y);
-		put_pixel(image, pixel_x, pixel_y, (t_color){.r = 255});
-		current_dist += 1.0f;
+		put_pixel(image, pixel_x * TILE_SIZE, pixel_y * TILE_SIZE, (t_color){.r = 255});
+		current_dist += 0.01f;
 	}
 }

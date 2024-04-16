@@ -5,6 +5,8 @@ SRCS		:=	main.c \
 				rect.c \
 				window.c \
 				ray.c \
+				player.c \
+				key_event.c \
 				image.c
 OBJS		:= $(SRCS:.c=.o)
 

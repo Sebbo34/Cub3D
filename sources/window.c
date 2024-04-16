@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:30:00 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 16:43:42 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/16 12:41:34 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,6 @@
 int	cross_event(t_window *window)
 {
 	mlx_loop_end(window->mlx_context);
-	return (0);
-}
-
-int	key_event(int keycode, t_window *window)
-{
-	if (keycode == XK_Escape)
-		mlx_loop_end(window->mlx_context);
 	return (0);
 }
 
@@ -46,7 +39,6 @@ bool	create_window(t_window *window, uint32_t width, uint32_t height)
 		return (false);
 	}
 	mlx_hook(window->window, DestroyNotify, 1L << 0, cross_event, window);
-	mlx_hook(window->window, KeyPress, KeyPressMask, key_event, window);
 	return (true);
 }
 

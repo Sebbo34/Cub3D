@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 16:30:59 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/16 12:53:11 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	display_map(t_map map, t_image image)
 			rect.start_x = j * rect.width;
 			if (map.tiles[i * map.width + j] == TILE_WALL)
 				fill_rect(rect, image, (t_color){.hex = 0x303030});
+			else
+				fill_rect(rect, image, (t_color){.hex = 0});
 			j++;
 		}
 		i++;
