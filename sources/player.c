@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:43:41 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/16 15:22:58 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/16 19:00:11 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	move_player(t_keys keys, t_player *player)
 {
-	const float		speed = 0.01f;
+	const float		speed = 0.03f;
 	float			forward_movement;
 	float			side_movement;
 
@@ -30,7 +30,7 @@ void	move_player(t_keys keys, t_player *player)
 
 void	turn_player(t_keys keys, t_player *player)
 {
-	const float angular_speed = 0.002f;
+	const float angular_speed = 0.005f;
 	int			rotation_movement;
 	float		rotation_cos;
 	float		rotation_sin;

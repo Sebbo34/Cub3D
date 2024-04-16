@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/16 15:42:40 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/16 19:05:50 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,27 @@
 
 int	game_loop(t_loop_context *context)
 {
-	t_window	window;
-	t_player	*player;
+	t_window				window;
+	t_player				*player;
+	t_ray					ray;
+	float					hit_dist;
+	float					hit_point_x;
+	float					hit_point_y;
+	enum e_hit_direction	hit_dir;
 
 	window = context->window;
 	player = context->player;
 	move_player(*context->keys, player);
 	display_map(context->map, window.background);
-	display_ray((t_ray){player->x, player->y,
-		player->direction_x, player->direction_y}, window.background);
+	ray = (t_ray){player->x, player->y,
+		player->direction_x, player->direction_y};
+	display_ray(ray, window.background);
+	if (ray_hit_walls(ray, context->map, &hit_dir, &hit_dist))
+	{
+		project_ray(ray, hit_dist, &hit_point_x, &hit_point_y);
+		fill_rect((t_rect){hit_point_x * TILE_SIZE, hit_point_y * TILE_SIZE, 10, 10},
+			window.background, (t_color){.b = 255});
+	}
 	update_window(window);
 	return (0);
 }
@@ -39,7 +51,7 @@ int	main(void)
 	player.x = 2.5f;
 	player.y = 2.5f;
 	player.direction_x = 0.0f;
-	player.direction_y = -1.0f;
+	player.direction_y = 1.0f;
 
 	map = init_map();
 

@@ -5,6 +5,7 @@ SRCS		:=	main.c \
 				rect.c \
 				window.c \
 				ray.c \
+				ray_hit_walls.c \
 				player.c \
 				key_event.c \
 				image.c

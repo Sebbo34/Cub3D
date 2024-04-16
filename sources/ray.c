@@ -6,44 +6,37 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:21:11 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/16 15:22:18 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/16 18:19:53 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 
-float	ray_horizontal_dist(t_ray ray, uint32_t width)
+float	ray_hit_vertical_lines(t_ray ray, uint32_t width)
 {
+	if (ray.direction_x == 0)
+		return (INFINITY);
 	if (ray.direction_x > 0)
 		return ((width - ray.start_x) / ray.direction_x);
 	else
 		return (ray.start_x / -ray.direction_x);
 }
 
-float	ray_vertical_dist(t_ray ray, uint32_t height)
+float	ray_hit_horizontal_lines(t_ray ray, uint32_t height)
 {
+	if (ray.direction_y == 0)
+		return (INFINITY);
 	if (ray.direction_y > 0)
 		return ((height - ray.start_y) / ray.direction_y);
 	else
 		return (ray.start_y / -ray.direction_y);
 }
 
-float	ft_float_min(float a, float b)
-{
-	if (a < b)
-		return (a);
-	return (b);
-}
-
 float	ray_intersect_rect(t_ray ray, uint32_t width, uint32_t height)
 {
-	if (ray.direction_x == 0)
-		return (ray_vertical_dist(ray, height));
-	if (ray.direction_y == 0)
-		return (ray_horizontal_dist(ray, width));
-	return (ft_float_min(
-		ray_horizontal_dist(ray, width),
-		ray_vertical_dist(ray, height)
+	return (fmin(
+		ray_hit_horizontal_lines(ray, width),
+		ray_hit_vertical_lines(ray, height)
 	));
 }
 
@@ -62,7 +55,7 @@ void	display_ray(t_ray ray, t_image image)
 
 	current_dist = 0;
 	max_distance = ray_intersect_rect(ray, image.width / TILE_SIZE, image.height / TILE_SIZE);
-	while (current_dist < max_distance - 0.5f)
+	while (current_dist < max_distance)
 	{
 		project_ray(ray, current_dist, &pixel_x, &pixel_y);
 		put_pixel(image, pixel_x * TILE_SIZE, pixel_y * TILE_SIZE, (t_color){.r = 255});

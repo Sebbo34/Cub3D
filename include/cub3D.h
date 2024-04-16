@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:25:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/16 15:42:37 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/16 18:55:01 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <X11/keysym.h>
 # include <stdbool.h>
 # include <stdint.h>
+# include <math.h>
 
 # define TILE_SIZE	100
 
@@ -111,6 +112,21 @@ typedef struct s_loop_context
 	t_keys		*keys;
 }	t_loop_context;
 
+enum e_hit_direction
+{
+	DIR_NS,
+	DIR_WE,
+};
+
+// TODO:
+// enum e_hit_type
+// {
+// 	HIT_NS,
+// 	HIT_WE,
+// 	HIT_NONE,
+// 	HIT_IN_WALL,
+// };
+
 t_map	init_map(void);
 void	display_map(t_map map, t_image image);
 
@@ -126,8 +142,12 @@ void	update_window(t_window window);
 void	destroy_window(t_window window);
 
 float	ray_intersect_rect(t_ray ray, uint32_t width, uint32_t height);
+float	ray_hit_vertical_lines(t_ray ray, uint32_t width);
+float	ray_hit_horizontal_lines(t_ray ray, uint32_t height);
 void	project_ray(t_ray ray, float dist, float *out_x, float *out_y);
 void	display_ray(t_ray ray, t_image image);
+
+bool	ray_hit_walls(t_ray ray, t_map map, enum e_hit_direction *hit_dir, float *hit_dist);
 
 int		key_press(int keycode, t_key_event_context *context);
 int		key_release(int keycode, t_key_event_context *context);
