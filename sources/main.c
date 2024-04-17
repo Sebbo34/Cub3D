@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 18:02:29 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 18:24:52 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int	game_loop(t_loop_context *context)
 	float					hit_point_y;
 
 	window = context->window;
-	player = context->player;
+	player = &context->scene->player;
 	move_player(*context->keys, player);
-	display_map(context->map, window.background);
+	display_map(context->scene->map, window.background);
 	ray = (t_ray){player->x, player->y,
 		player->direction_x, player->direction_y};
 	display_ray(ray, window.background);
-	hit_type = ray_hit_walls(ray, context->map, &hit_dist);
+	hit_type = ray_hit_walls(ray, context->scene->map, &hit_dist);
 	if (hit_type == HIT_NS || hit_type == HIT_WE)
 	{
 		project_ray(ray, hit_dist, &hit_point_x, &hit_point_y);
@@ -44,27 +44,21 @@ int	game_loop(t_loop_context *context)
 int	main(int argc, char **argv)
 {
 	t_window		window;
-	t_map			map;
-	t_assets		assets;
-	t_player		player;
+	t_scene			scene;
 	t_keys			keys;
 
 	keys = (t_keys){0};
-	player.x = 2.5f;
-	player.y = 2.5f;
-	player.direction_x = 0.0f;
-	player.direction_y = 1.0f;
-	
+
 	if (!create_window(&window, TILE_SIZE * 11, TILE_SIZE * 11))
 		return (1);
-	map = init_map();
-	if (argc != 2 || !load_map(argv[1], &map, &assets, window.mlx_context))
+	if (argc != 2 || !load_scene(argv[1], &scene, window.mlx_context))
 		return (destroy_window(window), 1);
 	if (!open_window(&window, &keys))
 		return (destroy_window(window), 1);
 	mlx_loop_hook(window.mlx_context, game_loop, &(t_loop_context){
-		window, map, &player, &keys});
+		window, &scene, &keys});
 	mlx_loop(window.mlx_context);
 	close_window(window);
+	destroy_scene(scene, window.mlx_context);
 	destroy_window(window);
 }

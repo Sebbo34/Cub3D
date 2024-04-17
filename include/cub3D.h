@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:25:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 18:10:23 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 19:01:16 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,14 @@ typedef struct s_map
 	enum e_tile_kind	*tiles;
 }	t_map;
 
+typedef struct s_incomplete_assets
+{
+	t_image			images[4];
+	t_color			color[2];
+	bool			is_found[6];
+	unsigned int	count;
+} t_incomplete_assets;
+
 typedef struct s_assets
 {
 	t_image		no;
@@ -112,12 +120,12 @@ typedef struct s_keys
 	bool	right;
 } t_keys;
 
-// typedef struct s_scene
-// {
-// 	t_assets	assets;
-// 	t_map		map;
-// 	t_player	player;
-// }	t_scene;
+typedef struct s_scene
+{
+	t_assets	assets;
+	t_map		map;
+	t_player	player;
+}	t_scene;
 
 typedef struct s_key_event_context
 {
@@ -128,8 +136,7 @@ typedef struct s_key_event_context
 typedef struct s_loop_context
 {
 	t_window	window;
-	t_map		map;
-	t_player	*player;
+	t_scene		*scene;
 	t_keys		*keys;
 }	t_loop_context;
 
@@ -169,8 +176,8 @@ enum e_read_status
 };
 
 t_map				init_map(void);
-bool				load_map(char *path, t_map *map, t_assets *assets, void *mlx_context);
-void				destroy_map(t_map map);
+bool				load_scene(char *path, t_scene *scene, void *mlx_context);
+void				destroy_scene(t_scene scene, void *mlx_context);
 
 void				display_map(t_map map, t_image image);
 
@@ -198,6 +205,8 @@ enum e_hit_type		ray_hit_walls(t_ray ray, t_map map, float *hit_dist);
 
 int					key_press(int keycode, t_key_event_context *context);
 int					key_release(int keycode, t_key_event_context *context);
+
+t_player			init_player(void);
 void				move_player(t_keys keys, t_player *player);
 void				turn_player(t_keys keys, t_player *player);
 

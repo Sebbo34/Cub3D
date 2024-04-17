@@ -6,12 +6,23 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:43:41 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/16 19:00:11 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 18:20:40 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3D.h"
 #include <math.h>
+
+t_player	init_player(void)
+{
+	t_player	player;
+
+	player.x = 2.5f;
+	player.y = 2.5f;
+	player.direction_x = 0.0f;
+	player.direction_y = 1.0f;
+	return (player);
+}
 
 void	move_player(t_keys keys, t_player *player)
 {
