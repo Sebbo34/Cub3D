@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:37:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/15 16:30:59 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 17:53:17 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ bool	create_image(
 			&bits_per_pixel, &line_size, &endian);
 	image->width = width;
 	image->height = height;
+	return (true);
+}
+
+bool	load_image(void *mlx_context, t_image *image, char *path)
+{
+	int	bits_per_pixel;
+	int	line_size;
+	int	endian;
+
+	image->mlx_image = mlx_xpm_file_to_image(mlx_context, path,
+			(int *) &image->width, (int *) &image->height);
+	if (!image->mlx_image)
+		return (false);
+	printf("Wall valid\n");
+	image->pixels = (t_color *) mlx_get_data_addr(image->mlx_image,
+			&bits_per_pixel, &line_size, &endian);
 	return (true);
 }
 

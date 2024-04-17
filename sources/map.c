@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 14:27:54 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 18:03:05 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,19 +61,54 @@ void	display_map(t_map map, t_image image)
 	}
 }
 
-bool	load_map(t_map *map, char *path)
+// bool	ft_str_starts_with(t_string str, char *prefix)
+// {
+// 	size_t	i;
+	
+// 	i = 0;
+// 	while (prefix[i])
+// 	{
+// 		if (i >= str.len || prefix[i] != str.str[i])
+// 			return (false);
+// 		i++;
+// 	}
+// 	return (true);
+// }
+
+// bool	get_nonempty_line(int fd, t_string *line)
+// {
+// 	while (get_next_line(fd, line) == READ_OK)
+// 	{
+// 		if (line->len != 0)
+// 			return (true);
+// 		free(line->str);
+// 	}
+// 	return (false);
+// }
+bool	load_map(char *path, t_map *map, t_assets *assets, void *mlx_context)
 {
 	int				fd;
-	t_string		line;
+	// t_string		line;
+	// size_t			i;
 
 	(void) map;
+	(void) assets;
+	(void) mlx_context;
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (false);
-	if (!get_next_line(fd, &line))
-		return (close(fd), false);
-	printf("First line: %.*s\n", (int) line.len, line.str);
-	free(line.str);
+	// if (!get_nonempty_line(fd, &line))
+	// 	return (close(fd), false);
+	// printf("Line: %s\n", line.str);
+	// if (!ft_str_starts_with(line, "NO "))
+	// 	return (free(line.str), close(fd), false);
+	// i = 3;
+	// while (i < line.len && line.str[i] == ' ')
+	// 	i++;
+	// if (!load_image(mlx_context, &assets->no, &line.str[i]))
+	// 	return (free(line.str), close(fd), false);
+	// destroy_image(mlx_context, assets->no);
+	// free(line.str);
 	close (fd);
 	return (true);
 }

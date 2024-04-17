@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 14:29:26 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 18:02:29 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int argc, char **argv)
 {
 	t_window		window;
 	t_map			map;
+	t_assets		assets;
 	t_player		player;
 	t_keys			keys;
 
@@ -53,18 +54,17 @@ int	main(int argc, char **argv)
 	player.y = 2.5f;
 	player.direction_x = 0.0f;
 	player.direction_y = 1.0f;
-
+	
+	if (!create_window(&window, TILE_SIZE * 11, TILE_SIZE * 11))
+		return (1);
 	map = init_map();
-	if (argc != 2 || !load_map(&map, argv[1]))
-		return (1);
-	if (!create_window(&window, TILE_SIZE * map.width, TILE_SIZE * map.height))
-		return (1);
-	mlx_hook(window.window, KeyPress, KeyPressMask, key_press, &(t_key_event_context){
-		&keys, window.mlx_context});
-	mlx_hook(window.window, KeyRelease, KeyReleaseMask, key_release, &(t_key_event_context){
-		&keys, window.mlx_context});
+	if (argc != 2 || !load_map(argv[1], &map, &assets, window.mlx_context))
+		return (destroy_window(window), 1);
+	if (!open_window(&window, &keys))
+		return (destroy_window(window), 1);
 	mlx_loop_hook(window.mlx_context, game_loop, &(t_loop_context){
 		window, map, &player, &keys});
 	mlx_loop(window.mlx_context);
+	close_window(window);
 	destroy_window(window);
 }

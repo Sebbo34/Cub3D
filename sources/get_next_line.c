@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:58:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 14:40:39 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 17:02:47 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,6 @@ bool	ft_strnchr(char *str, size_t len, char c, size_t *pos)
 	return (false);
 }
 
-bool	ft_strndup(char *str, size_t len, t_string *dst)
-{
-	size_t	i;
-
-	i = 0;
-	dst->str = malloc(len);
-	if (!dst->str)
-		return (false);
-	while (i < len)
-	{
-		dst->str[i] = str[i];
-		i++;
-	}
-	dst->len = len;
-	return (true);
-}
-
 bool	str_append(t_string *str, char *suffix, size_t len)
 {
 	char	*tmp;
@@ -51,7 +34,7 @@ bool	str_append(t_string *str, char *suffix, size_t len)
 
 	i = 0;
 	j = 0;
-	tmp = malloc(str->len + len);
+	tmp = malloc(str->len + len + 1);
 	if (!tmp)
 		return (false);
 	while (i < str->len)
@@ -64,13 +47,14 @@ bool	str_append(t_string *str, char *suffix, size_t len)
 		tmp[i + j] = suffix[j];
 		j++;
 	}
+	tmp[str->len + len] = '\0';
 	free(str->str);
 	str->str = tmp;
 	str->len += len;
 	return (true);
 }
 
-bool	get_next_line(int fd, t_string *line)
+enum e_read_status	get_next_line(int fd, t_string *line)
 {
 	static t_buffer	buf;
 	size_t			newline_pos;
@@ -81,17 +65,19 @@ bool	get_next_line(int fd, t_string *line)
 		if (ft_strnchr(&buf.buffer[buf.pos], buf.len - buf.pos, '\n', &newline_pos))
 		{
 			if (!str_append(line, &buf.buffer[buf.pos], newline_pos))
-				return (free(line->str), false);
+				return (free(line->str), READ_ERROR);
 			buf.pos += newline_pos + 1;
-			return (true);
+			return (READ_OK);
 		}
 		if (!str_append(line, &buf.buffer[buf.pos], buf.len - buf.pos))
-			return (free(line->str), false);
+			return (free(line->str), READ_ERROR);
 		buf.pos = 0;
 		buf.len = read(fd, buf.buffer, BUFFER_SIZE);
 		if (buf.len < 0)
-			return (free(line->str), false);
+			return (free(line->str), READ_ERROR);
+		if (buf.len == 0 && !line->len)
+			return (READ_END);
 		if (buf.len == 0)
-			return (true);
+			return (READ_OK);
 	}
 }
