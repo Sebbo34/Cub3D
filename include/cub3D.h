@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:25:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/16 18:55:01 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 11:47:43 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,42 +112,43 @@ typedef struct s_loop_context
 	t_keys		*keys;
 }	t_loop_context;
 
-enum e_hit_direction
+// TODO:
+enum e_hit_type
 {
-	DIR_NS,
-	DIR_WE,
+	HIT_NS,
+	HIT_WE,
+	HIT_NONE,
+	HIT_IN_WALL,
 };
 
-// TODO:
-// enum e_hit_type
-// {
-// 	HIT_NS,
-// 	HIT_WE,
-// 	HIT_NONE,
-// 	HIT_IN_WALL,
-// };
+typedef struct s_ray_progress
+{
+	float	vert_dist;
+	float	hor_dist;
+	float	max_dist;
+}	t_ray_progress;
 
-t_map	init_map(void);
-void	display_map(t_map map, t_image image);
+t_map			init_map(void);
+void			display_map(t_map map, t_image image);
+		
+void			put_pixel(t_image image, uint32_t x, uint32_t y, t_color color);
+void			fill_rect(t_rect rect, t_image image, t_color color);
+		
+bool			create_image(void *mlx_context, t_image *image, uint32_t width,
+					uint32_t height);
+void			destroy_image(void *mlx_context, t_image image);
+		
+bool			create_window(t_window *window, uint32_t width, uint32_t height);
+void			update_window(t_window window);
+void			destroy_window(t_window window);
+		
+float			ray_intersect_rect(t_ray ray, uint32_t width, uint32_t height);
+float			ray_hit_vertical_lines(t_ray ray, uint32_t width);
+float			ray_hit_horizontal_lines(t_ray ray, uint32_t height);
+void			project_ray(t_ray ray, float dist, float *out_x, float *out_y);
+void			display_ray(t_ray ray, t_image image);
 
-void	put_pixel(t_image image, uint32_t x, uint32_t y, t_color color);
-void	fill_rect(t_rect rect, t_image image, t_color color);
-
-bool	create_image(void *mlx_context, t_image *image, uint32_t width,
-			uint32_t height);
-void	destroy_image(void *mlx_context, t_image image);
-
-bool	create_window(t_window *window, uint32_t width, uint32_t height);
-void	update_window(t_window window);
-void	destroy_window(t_window window);
-
-float	ray_intersect_rect(t_ray ray, uint32_t width, uint32_t height);
-float	ray_hit_vertical_lines(t_ray ray, uint32_t width);
-float	ray_hit_horizontal_lines(t_ray ray, uint32_t height);
-void	project_ray(t_ray ray, float dist, float *out_x, float *out_y);
-void	display_ray(t_ray ray, t_image image);
-
-bool	ray_hit_walls(t_ray ray, t_map map, enum e_hit_direction *hit_dir, float *hit_dist);
+enum e_hit_type	ray_hit_walls(t_ray ray, t_map map, float *hit_dist);
 
 int		key_press(int keycode, t_key_event_context *context);
 int		key_release(int keycode, t_key_event_context *context);
