@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 12:31:10 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 14:27:54 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,21 @@ void	display_map(t_map map, t_image image)
 		}
 		i++;
 	}
+}
+
+bool	load_map(t_map *map, char *path)
+{
+	int				fd;
+	t_string		line;
+
+	(void) map;
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
+		return (false);
+	if (!get_next_line(fd, &line))
+		return (close(fd), false);
+	printf("First line: %.*s\n", (int) line.len, line.str);
+	free(line.str);
+	close (fd);
+	return (true);
 }

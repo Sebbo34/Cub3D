@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:25:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 11:47:43 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 14:44:09 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,12 @@
 # include <stdbool.h>
 # include <stdint.h>
 # include <math.h>
+# include <fcntl.h>
+# include <unistd.h>
 
-# define TILE_SIZE	100
+//						8 KiB
+# define BUFFER_SIZE	8192
+# define TILE_SIZE		100
 
 typedef	union 
 {
@@ -128,7 +132,23 @@ typedef struct s_ray_progress
 	float	max_dist;
 }	t_ray_progress;
 
+typedef	struct s_string
+{
+	char		*str;
+	size_t		len;
+} t_string;
+
+typedef	struct s_buffer
+{
+	char		buffer[BUFFER_SIZE];
+	size_t		pos;
+	ssize_t		len;
+} t_buffer;
+
 t_map			init_map(void);
+bool			load_map(t_map *map, char *path);
+void			destroy_map(t_map map);
+
 void			display_map(t_map map, t_image image);
 		
 void			put_pixel(t_image image, uint32_t x, uint32_t y, t_color color);
@@ -150,9 +170,11 @@ void			display_ray(t_ray ray, t_image image);
 
 enum e_hit_type	ray_hit_walls(t_ray ray, t_map map, float *hit_dist);
 
-int		key_press(int keycode, t_key_event_context *context);
-int		key_release(int keycode, t_key_event_context *context);
-void	move_player(t_keys keys, t_player *player);
-void	turn_player(t_keys keys, t_player *player);
+int				key_press(int keycode, t_key_event_context *context);
+int				key_release(int keycode, t_key_event_context *context);
+void			move_player(t_keys keys, t_player *player);
+void			turn_player(t_keys keys, t_player *player);
+
+bool			get_next_line(int fd, t_string *line);
 
 #endif

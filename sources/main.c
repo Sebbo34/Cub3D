@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 11:33:34 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/17 14:29:26 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	game_loop(t_loop_context *context)
 	return (0);
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
 	t_window		window;
 	t_map			map;
@@ -55,7 +55,8 @@ int	main(void)
 	player.direction_y = 1.0f;
 
 	map = init_map();
-
+	if (argc != 2 || !load_map(&map, argv[1]))
+		return (1);
 	if (!create_window(&window, TILE_SIZE * map.width, TILE_SIZE * map.height))
 		return (1);
 	mlx_hook(window.window, KeyPress, KeyPressMask, key_press, &(t_key_event_context){

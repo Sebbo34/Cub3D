@@ -8,6 +8,7 @@ SRCS		:=	main.c \
 				ray_hit_walls.c \
 				player.c \
 				key_event.c \
+				get_next_line.c \
 				image.c
 OBJS		:= $(SRCS:.c=.o)
 
