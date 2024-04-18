@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:59:15 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 12:13:01 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 12:59:39 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	put_pixel(t_image image, uint32_t x, uint32_t y, t_color color);
 bool	create_image(void *mlx_context, t_image *image, uint32_t width,
 			uint32_t height);
 bool	load_image(void *mlx_context, t_image *image, char *path);
+void	put_image(t_image dest, t_image src, t_rect zone);
 void	destroy_image(void *mlx_context, t_image image);
 
 void	fill_rect(t_rect rect, t_image image, t_color color);

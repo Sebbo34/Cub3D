@@ -1,5 +1,4 @@
 NO maps/wall.xpm
 WE maps/wall.xpm
-WE maps/wall.xpm
 SO maps/wall.xpm
 EA maps/wall.xpm

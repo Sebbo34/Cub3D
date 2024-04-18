@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 12:01:55 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 13:03:40 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	game_loop(t_loop_context *context)
 	window = context->window;
 	player = &context->scene->player;
 	move_player(*context->keys, player);
-	display_map(context->scene->map, window.background);
+	display_map(context->scene->map, window.background, context->scene->assets);
 	ray = (t_ray){player->x, player->y,
 		player->direction_x, player->direction_y};
 	display_ray(ray, window.background);

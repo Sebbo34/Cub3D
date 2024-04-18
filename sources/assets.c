@@ -6,13 +6,14 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 12:16:52 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 13:32:25 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene.h"
+#include "assets.h"
 #include "reading.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 void	ft_memcpy(void *dst, void *src, size_t size)
 {

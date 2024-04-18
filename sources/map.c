@@ -6,11 +6,12 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 12:08:06 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 13:02:24 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
+#include "scene.h"
 
 t_map	init_map(void)
 {
@@ -35,7 +36,7 @@ t_map	init_map(void)
 	return (map);
 }
 
-void	display_map(t_map map, t_image image)
+void	display_map(t_map map, t_image image, t_assets assets)
 {
 	t_rect		rect;
 	unsigned	i;
@@ -52,7 +53,7 @@ void	display_map(t_map map, t_image image)
 		{
 			rect.start_x = j * rect.width;
 			if (map.tiles[i * map.width + j] == TILE_WALL)
-				fill_rect(rect, image, (t_color){.hex = 0x303030});
+				put_image(image, assets.no, rect);
 			else
 				fill_rect(rect, image, (t_color){.hex = 0});
 			j++;

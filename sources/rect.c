@@ -6,17 +6,11 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:55:39 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 12:12:38 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 12:23:33 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "image.h"
-
-void	put_pixel(t_image image, uint32_t x, uint32_t y, t_color color)
-{
-	if (x < image.width && y < image.height)
-		image.pixels[y * image.width + x] = color;
-}
 
 void	fill_rect(t_rect rect, t_image image, t_color color)
 {
