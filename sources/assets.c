@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 13:32:25 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 15:51:44 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,28 +27,66 @@ void	ft_memcpy(void *dst, void *src, size_t size)
 	}
 }
 
-bool	ft_str_starts_with(t_string str, char *prefix)
+bool	ft_str_match(char **str, char *prefix)
 {
 	size_t	i;
 	
 	i = 0;
 	while (prefix[i])
 	{
-		if (i >= str.len || prefix[i] != str.str[i])
+		if (prefix[i] != (*str)[i])
 			return (false);
 		i++;
 	}
+	(*str) += i;
 	return (true);
 }
 
-bool	parse_direction(t_image *image, char *line, void *mlx_context)
+void	skip_spaces(char **str)
 {
-	size_t	spaces;
+	while (**str == ' ')
+		(*str)++;
+}
 
-	spaces = 0;
-	while (line[spaces] == ' ')
-		spaces++;
-	return (spaces > 0 && load_image(mlx_context, image, &line[spaces]));
+bool	ft_str_match_digit(char **str)
+{
+	if ('0' <= **str && **str <= '9')
+	{
+		(*str)++;
+		return (true);
+	}
+	return (false);
+}
+
+bool	parse_intensity(uint8_t *intensity, char **line)
+{
+	uint8_t	value;
+
+	if (!ft_str_match_digit(line))
+		return (false);
+	value = **line - '0';
+	if (!ft_str_match_digit(line))
+		return (*intensity = value, true);
+	value = value * 10 + **line - '0';
+	if (!ft_str_match_digit(line))
+		return (*intensity = value, true);
+	if (value > (255 - (**line - '0')) / 10)
+		return (false);
+	value = value * 10 + **line - '0';
+	*intensity = value;
+	return (true);
+}
+
+bool	parse_color(t_color *color, char *line)
+{
+	return (
+		parse_intensity(&color->r, &line)
+		&& ft_str_match(&line, ",")
+		&& parse_intensity(&color->g, &line)
+		&& ft_str_match(&line, ",")
+		&& parse_intensity(&color->g, &line)
+		&& *line == '\0'
+	);
 }
 
 void free_incomplete_assets(t_incomplete_assets tmp, void *mlx_context)
@@ -62,35 +100,65 @@ void free_incomplete_assets(t_incomplete_assets tmp, void *mlx_context)
 	if (tmp.is_found[3])
 		destroy_image(mlx_context, tmp.images[3]);
 }
+
+bool	match_identifier(char **line, int *index)
+{
+	char *const	identifier[6] = {"NO", "SO", "WE", "EA", "F", "C"};
+	int			i;
+
+	i = 0;
+	while (i < 6)
+	{
+		if (ft_str_match(line, identifier[i]))
+		{
+			if (!ft_str_match(line, " "))
+				return (false);
+			skip_spaces(line);
+			*index = i;
+			return (true);
+		}
+		i++;
+	}
+	return (false);
+}
+
+bool	parse_asset(char *line, t_incomplete_assets *assets, void *mlx_context)
+{
+	int	i;
+
+	if (!match_identifier(&line, &i))
+		return (false);
+	if (assets->is_found[i])
+		return (false);
+	if (i < 4)
+	{
+		if (!load_image(mlx_context, &assets->images[i], line))
+			return (false);
+	}
+	else
+	{
+		if (!parse_color(&assets->colors[i - 4], line))
+			return (false);
+	}
+	assets->count++;
+	assets->is_found[i] = true;
+	return (false);
+}
+
 bool	parse_assets(int fd, t_assets *assets, void *mlx_context)
 {
-	t_incomplete_assets tmp;
-	char *const			identifier[6] = {"NO", "SO", "WE", "EA", "F", "C"};
+	t_incomplete_assets tmp_assets;
 	t_string			line;
-	size_t				i;
 	
-	tmp = (t_incomplete_assets){0};
-	while (tmp.count < 4)
+	tmp_assets = (t_incomplete_assets){0};
+	while (tmp_assets.count < 6)
 	{
 		if (!get_nonempty_line(fd, &line))
-			return (false);
-		i = 0;
-		while (i < 6)
-		{
-			if (ft_str_starts_with(line, identifier[i]))
-			{
-				if (i < 4)
-				{
-					if (tmp.is_found[i] || !parse_direction(&tmp.images[i], line.str + 2, mlx_context))
-						return (free_incomplete_assets(tmp, mlx_context), free(line.str), false);
-					tmp.count++;
-					tmp.is_found[i] = true;
-				}
-			}
-			i++;
-		}
+			return (free_incomplete_assets(tmp_assets, mlx_context), false);
+		if (!parse_asset(line.str, &tmp_assets, mlx_context))
+			return (free_incomplete_assets(tmp_assets, mlx_context), free(line.str), false);
 		free(line.str);
 	}
-	ft_memcpy(assets, &tmp, sizeof(t_assets));
+	ft_memcpy(assets, &tmp_assets, sizeof(t_assets));
 	return (true);
 } 

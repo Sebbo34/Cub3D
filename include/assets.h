@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:06:57 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 13:09:20 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 15:21:54 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 typedef struct s_incomplete_assets
 {
 	t_image			images[4];
-	t_color			color[2];
+	t_color			colors[2];
 	bool			is_found[6];
 	unsigned int	count;
 } t_incomplete_assets;

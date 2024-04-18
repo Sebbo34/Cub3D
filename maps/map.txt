@@ -1,4 +1,10 @@
 NO maps/wall.xpm
 WE maps/wall.xpm
+F 0,0,255
 SO maps/wall.xpm
+
+
+
 EA maps/wall.xpm
+
+C 255,255,255

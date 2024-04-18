@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:37:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 13:31:30 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 15:25:01 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ bool	load_image(void *mlx_context, t_image *image, char *path)
 		return (false);
 	image->pixels = (t_color *) mlx_get_data_addr(image->mlx_image,
 			&bits_per_pixel, &line_size, &endian);
-	printf("Image address: %p\n", image->pixels);
 	return (true);
 }
 
