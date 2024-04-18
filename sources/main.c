@@ -6,12 +6,12 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 18:24:52 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 12:01:55 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
-#include <math.h>
+#include "window.h"
+#include <mlx.h>
 
 int	game_loop(t_loop_context *context)
 {

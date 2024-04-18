@@ -6,11 +6,12 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:37:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 17:53:17 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 12:04:37 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "image.h"
+#include <mlx.h>
 
 bool	create_image(
 	void *mlx_context, t_image *image, uint32_t width, uint32_t height
@@ -39,7 +40,6 @@ bool	load_image(void *mlx_context, t_image *image, char *path)
 			(int *) &image->width, (int *) &image->height);
 	if (!image->mlx_image)
 		return (false);
-	printf("Wall valid\n");
 	image->pixels = (t_color *) mlx_get_data_addr(image->mlx_image,
 			&bits_per_pixel, &line_size, &endian);
 	return (true);

@@ -6,11 +6,14 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:30:00 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 18:06:40 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 12:13:51 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "window.h"
+#include <mlx.h>
+#include <X11/X.h>
+#include <stdlib.h>
 
 int	cross_event(t_window *window)
 {

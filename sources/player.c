@@ -6,11 +6,11 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:43:41 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 18:20:40 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 12:08:16 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "scene.h"
 #include <math.h>
 
 t_player	init_player(void)

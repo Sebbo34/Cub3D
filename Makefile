@@ -1,7 +1,9 @@
 NAME		:= cub3D
 
 SRCS		:=	main.c \
+				scene.c \
 				map.c \
+				assets.c \
 				rect.c \
 				window.c \
 				ray.c \

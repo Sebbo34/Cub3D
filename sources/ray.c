@@ -6,11 +6,12 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:21:11 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/16 18:19:53 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 12:09:52 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "map.h"
+#include <math.h>
 
 float	ray_hit_vertical_lines(t_ray ray, uint32_t width)
 {

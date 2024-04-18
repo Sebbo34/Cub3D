@@ -6,11 +6,14 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:58:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 17:02:47 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 12:14:56 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "reading.h"
+#include <unistd.h>
+#include <stdbool.h>
+#include <stdlib.h>
 
 bool	ft_strnchr(char *str, size_t len, char c, size_t *pos)
 {
@@ -80,4 +83,15 @@ enum e_read_status	get_next_line(int fd, t_string *line)
 		if (buf.len == 0)
 			return (READ_OK);
 	}
+}
+
+bool	get_nonempty_line(int fd, t_string *line)
+{
+	while (get_next_line(fd, line) == READ_OK)
+	{
+		if (line->len != 0)
+			return (true);
+		free(line->str);
+	}
+	return (false);
 }

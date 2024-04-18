@@ -6,11 +6,12 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:57:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/17 12:38:22 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 12:09:08 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "map.h"
+#include <math.h>
 
 bool	check_wall_ns(t_ray ray, float dist, t_map map)
 {

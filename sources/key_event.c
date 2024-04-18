@@ -6,11 +6,13 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:02:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/16 15:32:08 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/18 12:05:12 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "cub3D.h"
+#include "user_input.h"
+#include <mlx.h>
+#include <X11/keysym.h>
 
 int	key_press(int keycode, t_key_event_context *context)
 {
