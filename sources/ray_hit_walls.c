@@ -6,12 +6,13 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:57:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 13:48:26 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 17:28:42 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include <math.h>
+#include <stdio.h>
 
 bool	check_wall_ns(t_ray ray, float dist, t_map map)
 {
@@ -39,20 +40,32 @@ bool	check_wall_we(t_ray ray, float dist, t_map map)
 	return (map.tiles[(int) check_y * map.width + (int) check_x] == TILE_WALL);
 }
 
+// V1 (3 whiles)
+// V2 (2 whiles)
+// V3 (1 whiles)
+
+// V2
 enum e_hit_type	ray_hit_ns_quadrants(
 	t_ray ray, t_ray_progress progress, t_map map, float *hit_dist
 ) {
-	while (progress.hor_dist < progress.max_dist)
+	while (true)
 	{
-		if (check_wall_ns(ray, progress.hor_dist, map))
-			return (*hit_dist = progress.hor_dist, HIT_NS);
-		progress.hor_dist += 1 / fabs(ray.direction_y);
-		if (progress.hor_dist >= progress.vert_dist)
+		// On avance hor_dist jusqu'a la prochaine ligne verticale (ou la fin de la map)
+		while (progress.hor_dist < progress.max_dist
+			&& progress.hor_dist < progress.vert_dist)
 		{
-			if (check_wall_we(ray, progress.vert_dist, map))
-				return (*hit_dist = progress.vert_dist, HIT_WE);
-			progress.vert_dist += 1 / fabs(ray.direction_x);
+			if (check_wall_ns(ray, progress.hor_dist, map))
+				return (*hit_dist = progress.hor_dist, HIT_NS);
+			progress.hor_dist += 1 / fabs(ray.direction_y);
 		}
+		// On verifie si la ligne verticale est avant la fin de la map
+		if (progress.vert_dist >= progress.max_dist)
+			break ;
+		// On check le mur WE (ligne verticale)
+		if (check_wall_we(ray, progress.vert_dist, map))
+			return (*hit_dist = progress.vert_dist, HIT_WE);
+		// On avance vert_dist sur la prochaine ligne verticale (possiblement hors map)
+		progress.vert_dist += 1 / fabs(ray.direction_x);
 	}
 	return (HIT_NONE);
 }
@@ -60,17 +73,20 @@ enum e_hit_type	ray_hit_ns_quadrants(
 enum e_hit_type	ray_hit_we_quadrants(
 	t_ray ray, t_ray_progress progress, t_map map, float *hit_dist
 ) {
-	while (progress.vert_dist < progress.max_dist)
+	while (true)
 	{
-		if (check_wall_we(ray, progress.vert_dist, map))
-			return (*hit_dist = progress.vert_dist, HIT_WE);
-		progress.vert_dist += 1 / fabs(ray.direction_x);
-		if (progress.vert_dist >= progress.hor_dist)
+		while (progress.vert_dist < progress.max_dist
+			&& progress.vert_dist < progress.hor_dist)
 		{
-			if (check_wall_ns(ray, progress.hor_dist, map))
-				return (*hit_dist = progress.hor_dist, HIT_NS);
-			progress.hor_dist += 1 / fabs(ray.direction_y);
+			if (check_wall_we(ray, progress.vert_dist, map))
+				return (*hit_dist = progress.vert_dist, HIT_WE);
+			progress.vert_dist += 1 / fabs(ray.direction_x);
 		}
+		if (progress.hor_dist >= progress.max_dist)
+			break ;
+		if (check_wall_ns(ray, progress.hor_dist, map))
+			return (*hit_dist = progress.hor_dist, HIT_NS);
+		progress.hor_dist += 1 / fabs(ray.direction_y);
 	}
 	return (HIT_NONE);
 }
@@ -82,15 +98,13 @@ enum e_hit_type	ray_hit_walls(t_ray ray, t_map map, float *hit_dist)
 	if (map.tiles[(int) ray.start_y * map.width + (int) ray.start_x]
 		== TILE_WALL)
 		return (HIT_IN_WALL);
-	progress.max_dist = fmin(
-			ray_hit_vertical_lines(ray, map.width),
-			ray_hit_horizontal_lines(ray, map.height));
-	progress.vert_dist = ray_hit_vertical_lines((t_ray){
-			ray.start_x - (int) ray.start_x, ray.start_y - (int) ray.start_y,
-			ray.direction_x, ray.direction_y}, 1);
-	progress.hor_dist = ray_hit_horizontal_lines((t_ray){
-			ray.start_x - (int) ray.start_x, ray.start_y - (int) ray.start_y,
-			ray.direction_x, ray.direction_y}, 1);
+	progress.max_dist = fmin(\
+		ray_hit_vertical_lines(offset_ray(ray, 0.5f, 0.5f), map.width - 1), \
+		ray_hit_horizontal_lines(offset_ray(ray, 0.5f, 0.5f), map.height - 1));
+	progress.vert_dist = ray_hit_vertical_lines(
+			offset_ray(ray, (int) ray.start_x, (int) ray.start_y), 1);
+	progress.hor_dist = ray_hit_horizontal_lines(
+			offset_ray(ray, (int) ray.start_x, (int) ray.start_y), 1);
 	if (fabs(ray.direction_y) > fabs(ray.direction_x))
 		return (ray_hit_ns_quadrants(ray, progress, map, hit_dist));
 	else

@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:21:11 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 12:09:52 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 17:01:07 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ void	project_ray(t_ray ray, float dist, float *out_x, float *out_y)
 {
 	*out_x = ray.start_x + ray.direction_x * dist;
 	*out_y = ray.start_y + ray.direction_y * dist;
+}
+
+t_ray	offset_ray(t_ray ray, float offset_x, float offset_y)
+{
+	return ((t_ray){
+		ray.start_x - offset_x,
+		ray.start_y - offset_y,
+		ray.direction_x,
+		ray.direction_y,
+	});
 }
 
 void	display_ray(t_ray ray, t_image image)

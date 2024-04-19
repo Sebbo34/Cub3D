@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 14:20:01 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 17:48:47 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@ bool	load_scene(char *path, t_scene *scene, void *mlx_context)
 	fd = open(path, O_RDONLY);
 	if (fd == -1)
 		return (false);
-	scene->player = init_player();
 	if (!parse_assets(fd, &scene->assets, mlx_context))
 		return (close(fd), false);
-	if (!parse_map(fd, &scene->map))
+	if (!parse_map(fd, &scene->map, &scene->player))
 		return (destroy_assets(scene->assets, mlx_context), close(fd), false);
 	close (fd);
 	return (true);

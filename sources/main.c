@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 13:03:40 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 16:57:52 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,19 @@ int	game_loop(t_loop_context *context)
 	display_map(context->scene->map, window.background, context->scene->assets);
 	ray = (t_ray){player->x, player->y,
 		player->direction_x, player->direction_y};
-	display_ray(ray, window.background);
-	hit_type = ray_hit_walls(ray, context->scene->map, &hit_dist);
-	if (hit_type == HIT_NS || hit_type == HIT_WE)
+	fill_rect((t_rect){player->x * TILE_SIZE, player->y * TILE_SIZE, 5, 5},
+				window.background, (t_color){.r = 255});
+	if (0 <= player->x && player->x < context->scene->map.width
+		&& 0 <= player->y && player->y < context->scene->map.height)
 	{
-		project_ray(ray, hit_dist, &hit_point_x, &hit_point_y);
-		fill_rect((t_rect){hit_point_x * TILE_SIZE, hit_point_y * TILE_SIZE, 10, 10},
-			window.background, (t_color){.b = 255});
+		display_ray(ray, window.background);
+		hit_type = ray_hit_walls(ray, context->scene->map, &hit_dist);
+		if (hit_type == HIT_NS || hit_type == HIT_WE)
+		{
+			project_ray(ray, hit_dist, &hit_point_x, &hit_point_y);
+			fill_rect((t_rect){hit_point_x * TILE_SIZE, hit_point_y * TILE_SIZE, 10, 10},
+				window.background, (t_color){.b = 255});
+		}
 	}
 	update_window(window);
 	return (0);

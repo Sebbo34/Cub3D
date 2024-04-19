@@ -6,27 +6,16 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:43:41 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 12:08:16 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 17:58:44 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "scene.h"
+#include "player.h"
 #include <math.h>
-
-t_player	init_player(void)
-{
-	t_player	player;
-
-	player.x = 2.5f;
-	player.y = 2.5f;
-	player.direction_x = 0.0f;
-	player.direction_y = 1.0f;
-	return (player);
-}
 
 void	move_player(t_keys keys, t_player *player)
 {
-	const float		speed = 0.03f;
+	const float		speed = 0.06f;
 	float			forward_movement;
 	float			side_movement;
 
@@ -41,7 +30,7 @@ void	move_player(t_keys keys, t_player *player)
 
 void	turn_player(t_keys keys, t_player *player)
 {
-	const float angular_speed = 0.005f;
+	const float angular_speed = 0.01f;
 	int			rotation_movement;
 	float		rotation_cos;
 	float		rotation_sin;

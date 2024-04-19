@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 14:19:06 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 17:52:01 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,21 +114,99 @@ bool	parse_tiles(t_map map, t_str_array lines)
 	return (true);
 }
 
-bool	parse_map(int fd, t_map *map)
+bool	check_floor_closed(t_map map, uint32_t i, uint32_t j)
+{
+	if (i == map.height - 1 || map.tiles[(i + 1) * map.width + j] == TILE_VOID)
+		return (false);
+	if (i == 0 || map.tiles[(i - 1) * map.width + j] == TILE_VOID)
+		return (false);
+	if (j == 0 || map.tiles[i * map.width + j - 1] == TILE_VOID)
+		return (false);
+	if (j == map.width - 1 || map.tiles[i * map.width + j + 1] == TILE_VOID)
+		return (false);
+	return (true);
+}
+
+bool	check_map(t_map map)
+{
+	uint32_t	i;
+	uint32_t	j;
+
+	i = 0;
+	while (i < map.height)
+	{
+		j = 0;
+		while (j < map.width)
+		{
+			if (map.tiles[i * map.width + j] == TILE_FLOOR)
+			{
+				if (!check_floor_closed(map, i, j))
+					return (false);
+			}
+			j++;
+		}
+		i++;
+	}
+	return (true);
+}
+
+bool	char_to_player(t_player *player, float x, float y, char c)
+{
+	if (c == 'N')
+		return (*player = (t_player){x, y, 0, -1}, true);
+	else if (c == 'S')
+		return (*player = (t_player){x, y, 0, 1}, true);
+	else if (c == 'W')
+		return (*player = (t_player){x, y, -1, 0}, true);
+	else if (c == 'E')
+		return (*player = (t_player){x, y, 1, 0}, true);
+	return (false);
+}
+
+bool	search_player(t_str_array lines, t_player *player)
+{
+	int		i;
+	size_t	j;
+	bool	player_found;
+
+	i = 0;
+	player_found = false;
+	while (i < lines.len)
+	{
+		j = 0;
+		while (j < lines.strs[i].len)
+		{
+			if (char_to_player(player, j + 0.5, i + 0.5, lines.strs[i].str[j]))
+			{
+				if (player_found)
+					return (false);
+				player_found = true;
+			}
+			j++;
+		}
+		i++;
+	}
+	return (player_found);
+}
+
+bool	parse_map(int fd, t_map *map, t_player *player)
 {
 	t_str_array		lines;
 
 	if (!read_map_lines(fd, &lines))
 		return (false);
+	if (!search_player(lines, player))
+		return (free_str_array(lines), false);
 	map->width = get_map_width(&lines);
 	map->height = lines.len;
 	map->tiles = malloc(map->width * map->height * sizeof(t_tile));
 	if (!map->tiles)
 		return (free_str_array(lines), false);
-	
 	if (!parse_tiles(*map, lines))
 		return (free(map->tiles), free_str_array(lines), false);
 	free_str_array(lines);
+	if (!check_map(*map))
+		return (free(map->tiles), false);
 	return (true);
 }
 
@@ -138,20 +216,23 @@ void	display_map(t_map map, t_image image, t_assets assets)
 	unsigned	i;
 	unsigned	j;
 	
+	fill_rect((t_rect){0, 0, image.width, image.height}, image, (t_color){0});
 	rect.width = TILE_SIZE;
 	rect.height = TILE_SIZE;
 	i = 0;
-	while (i < map.height && (i + 1) * rect.height < image.height)
+	while (i < map.height && (i + 1) * rect.height <= image.height)
 	{
 		rect.start_y = i * rect.height;
 		j = 0;
-		while (j < map.width && (j + 1) * rect.width < image.width)
+		while (j < map.width && (j + 1) * rect.width <= image.width)
 		{
 			rect.start_x = j * rect.width;
 			if (map.tiles[i * map.width + j] == TILE_WALL)
 				put_image(image, assets.no, rect);
-			else
+			else if (map.tiles[i * map.width + j] == TILE_FLOOR)
 				fill_rect(rect, image, assets.floor);
+			else
+				fill_rect(rect, image, (t_color){0});
 			j++;
 		}
 		i++;
