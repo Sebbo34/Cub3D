@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 15:51:44 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 11:29:54 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,11 @@ void	skip_spaces(char **str)
 		(*str)++;
 }
 
-bool	ft_str_match_digit(char **str)
+bool	ft_str_match_digit(char **str, uint8_t *digit)
 {
 	if ('0' <= **str && **str <= '9')
 	{
+		*digit = **str - '0';
 		(*str)++;
 		return (true);
 	}
@@ -60,20 +61,19 @@ bool	ft_str_match_digit(char **str)
 
 bool	parse_intensity(uint8_t *intensity, char **line)
 {
+	uint8_t	digit;
 	uint8_t	value;
 
-	if (!ft_str_match_digit(line))
+	if (!ft_str_match_digit(line, &value))
 		return (false);
-	value = **line - '0';
-	if (!ft_str_match_digit(line))
+	if (!ft_str_match_digit(line, &digit))
 		return (*intensity = value, true);
-	value = value * 10 + **line - '0';
-	if (!ft_str_match_digit(line))
+	value = value * 10 + digit;
+	if (!ft_str_match_digit(line, &digit))
 		return (*intensity = value, true);
-	if (value > (255 - (**line - '0')) / 10)
+	if (value > (255 - digit) / 10)
 		return (false);
-	value = value * 10 + **line - '0';
-	*intensity = value;
+	*intensity = value * 10 + digit;
 	return (true);
 }
 
@@ -84,7 +84,7 @@ bool	parse_color(t_color *color, char *line)
 		&& ft_str_match(&line, ",")
 		&& parse_intensity(&color->g, &line)
 		&& ft_str_match(&line, ",")
-		&& parse_intensity(&color->g, &line)
+		&& parse_intensity(&color->b, &line)
 		&& *line == '\0'
 	);
 }
@@ -142,7 +142,7 @@ bool	parse_asset(char *line, t_incomplete_assets *assets, void *mlx_context)
 	}
 	assets->count++;
 	assets->is_found[i] = true;
-	return (false);
+	return (true);
 }
 
 bool	parse_assets(int fd, t_assets *assets, void *mlx_context)

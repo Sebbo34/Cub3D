@@ -1,6 +1,6 @@
 NO maps/wall.xpm
 WE maps/wall.xpm
-F 0,0,255
+F 64,0,32
 SO maps/wall.xpm
 
 
