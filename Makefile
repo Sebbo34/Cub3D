@@ -11,6 +11,9 @@ SRCS		:=	main.c \
 				player.c \
 				key_event.c \
 				get_next_line.c \
+				color.c \
+				parsing.c \
+				str_array.c \
 				image.c
 OBJS		:= $(SRCS:.c=.o)
 

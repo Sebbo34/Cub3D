@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:06:57 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 15:21:54 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 11:44:48 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_assets
 	t_color		ceiling;
 }	t_assets;
 
-bool		parse_assets(int fd, t_assets *assets, void *mlx_context);
+bool	parse_assets(int fd, t_assets *assets, void *mlx_context);
+void	destroy_assets(t_assets assets, void *mlx_context);
 
 #endif

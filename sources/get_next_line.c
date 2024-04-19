@@ -6,50 +6,24 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:58:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 12:14:56 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 14:15:26 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "reading.h"
+#include "parsing.h"
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
-bool	ft_strnchr(char *str, size_t len, char c, size_t *pos)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < len)
-	{
-		if (str[i] == c)
-			return (*pos = i, true);
-		i++;
-	}
-	return (false);
-}
-
-bool	str_append(t_string *str, char *suffix, size_t len)
+bool	str_append(t_str *str, char *suffix, size_t len)
 {
 	char	*tmp;
-	size_t	i;
-	size_t	j;
 
-	i = 0;
-	j = 0;
 	tmp = malloc(str->len + len + 1);
 	if (!tmp)
 		return (false);
-	while (i < str->len)
-	{
-		tmp[i] = str->str[i];
-		i++;
-	}
-	while (j < len)
-	{
-		tmp[i + j] = suffix[j];
-		j++;
-	}
+	ft_memcpy(tmp, str->str, str->len);
+	ft_memcpy(tmp + str->len, suffix, len);
 	tmp[str->len + len] = '\0';
 	free(str->str);
 	str->str = tmp;
@@ -57,12 +31,12 @@ bool	str_append(t_string *str, char *suffix, size_t len)
 	return (true);
 }
 
-enum e_read_status	get_next_line(int fd, t_string *line)
+enum e_read_status	get_next_line(int fd, t_str *line)
 {
 	static t_buffer	buf;
 	size_t			newline_pos;
 
-	*line = (t_string){NULL, 0};
+	*line = (t_str){NULL, 0};
 	while (true)
 	{
 		if (ft_strnchr(&buf.buffer[buf.pos], buf.len - buf.pos, '\n', &newline_pos))
@@ -79,13 +53,13 @@ enum e_read_status	get_next_line(int fd, t_string *line)
 		if (buf.len < 0)
 			return (free(line->str), READ_ERROR);
 		if (buf.len == 0 && !line->len)
-			return (READ_END);
+			return (free(line->str), READ_END);
 		if (buf.len == 0)
 			return (READ_OK);
 	}
 }
 
-bool	get_nonempty_line(int fd, t_string *line)
+bool	get_nonempty_line(int fd, t_str *line)
 {
 	while (get_next_line(fd, line) == READ_OK)
 	{

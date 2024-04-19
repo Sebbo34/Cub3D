@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:51:18 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 13:10:35 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 14:12:01 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@ enum e_hit_type
 	HIT_IN_WALL,
 };
 
+enum e_tile_line_status
+{
+	TILE_LINE_OK,
+	TILE_LINE_ERROR,
+	TILE_LINE_NO_FLOOR,
+};
+
 typedef struct s_ray
 {
 	float	start_x;
@@ -42,21 +49,22 @@ typedef struct s_ray_progress
 	float	max_dist;
 }	t_ray_progress;
 
-enum e_tile_kind
+typedef enum e_tile_kind
 {
 	TILE_VOID,
 	TILE_FLOOR,
 	TILE_WALL,
-};
+}	t_tile;
 
 typedef struct s_map
 {
 	uint32_t			width;
 	uint32_t			height;
-	enum e_tile_kind	*tiles;
+	t_tile				*tiles;
 }	t_map;
 
-t_map			init_map(void);
+// t_map			init_map(void);
+bool			parse_map(int fd, t_map *map);
 void			display_map(t_map map, t_image image, t_assets assets);
 
 float			ray_intersect_rect(t_ray ray, uint32_t width, uint32_t height);

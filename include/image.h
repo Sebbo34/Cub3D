@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:59:15 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 12:59:39 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 11:48:33 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,8 @@ void	put_image(t_image dest, t_image src, t_rect zone);
 void	destroy_image(void *mlx_context, t_image image);
 
 void	fill_rect(t_rect rect, t_image image, t_color color);
+
+bool	parse_intensity(uint8_t *intensity, char **line);
+bool	parse_color(t_color *color, char *line);
 
 #endif

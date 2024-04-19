@@ -6,13 +6,12 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:37:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 15:25:01 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/19 14:16:33 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "image.h"
 #include <mlx.h>
-#include <stdio.h>
 
 bool	create_image(
 	void *mlx_context, t_image *image, uint32_t width, uint32_t height

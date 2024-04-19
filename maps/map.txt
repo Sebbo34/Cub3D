@@ -8,3 +8,7 @@ SO maps/wall.xpm
 EA maps/wall.xpm
 
 C 255,255,255
+
+111
+101
+111
