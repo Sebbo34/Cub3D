@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:23:24 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 12:18:49 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 13:14:51 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ bool	push_str(t_str_array *array, t_str str)
 	return (true);
 }
 
-uint32_t	get_max_len(t_str_array *lines)
+int	get_max_len(t_str_array *lines)
 {
-	int			i;
-	uint32_t	max_len;
+	int	i;
+	int	max_len;
 
 	i = 0;
 	max_len = 0;
 	while (i < lines->len)
 	{
-		if ((uint32_t) lines->strs[i].len > max_len)
+		if ((int) lines->strs[i].len > max_len)
 			max_len = lines->strs[i].len;
 		i++;
 	}

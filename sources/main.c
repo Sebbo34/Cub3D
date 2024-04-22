@@ -6,17 +6,19 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 12:03:48 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 16:13:04 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 #include <mlx.h>
+#include <math.h>
 
 int	game_loop(t_loop_context *context)
 {
 	t_window				window;
 	t_player				*player;
+	t_map					map;
 	t_ray					ray;
 	float					hit_dist;
 	enum e_hit_type			hit_type;
@@ -25,21 +27,48 @@ int	game_loop(t_loop_context *context)
 
 	window = context->window;
 	player = &context->scene->player;
+	map = context->scene->map;
 	move_player(*context->keys, player);
-	display_map(context->scene->map, window.background, context->scene->assets);
+	display_map(map, window.background, context->scene->assets);
 	ray = (t_ray){player->x, player->y,
 		player->direction_x, player->direction_y};
-	fill_rect((t_rect){player->x * TILE_SIZE, player->y * TILE_SIZE, 5, 5},
+	fill_rect((t_rect){
+		(window.background.width - TILE_SIZE * map.width) / 2 + player->x * TILE_SIZE,
+		(window.background.height - TILE_SIZE * map.height) / 2 + player->y * TILE_SIZE,
+		5, 5},
 		window.background, (t_color){.r = 255});
-	if (0 <= player->x && player->x < context->scene->map.width
-		&& 0 <= player->y && player->y < context->scene->map.height)
+	if (0 <= player->x && player->x < map.width
+		&& 0 <= player->y && player->y < map.height)
 	{
-		display_ray(ray, window.background);
-		hit_type = ray_hit_walls(ray, context->scene->map, &hit_dist);
+		display_ray(offset_ray(ray,
+			-((float) window.background.width / TILE_SIZE - map.width) / 2,
+			-((float) window.background.height / TILE_SIZE - map.height) / 2),
+			window.background);
+		hit_type = ray_hit_walls(ray, map, &hit_dist);
 		if (hit_type == HIT_NS || hit_type == HIT_WE)
 		{
 			project_ray(ray, hit_dist, &hit_point_x, &hit_point_y);
-			fill_rect((t_rect){hit_point_x * TILE_SIZE, hit_point_y * TILE_SIZE, 10, 10},
+			fill_rect((t_rect){
+				(window.background.width - TILE_SIZE * map.width) / 2 + hit_point_x * TILE_SIZE,
+				(window.background.height - TILE_SIZE * map.height) / 2 + hit_point_y * TILE_SIZE,
+				10, 10},
+				window.background, (t_color){.b = 255});
+		}
+	}
+	else
+	{
+		display_ray(offset_ray(ray,
+			-((float) window.background.width / TILE_SIZE - map.width) / 2,
+			-((float) window.background.height / TILE_SIZE - map.height) / 2),
+			window.background);
+		hit_dist = ray_hit_rect(ray, map.width, map.height);
+		if (hit_dist != INFINITY)
+		{
+			project_ray(ray, hit_dist, &hit_point_x, &hit_point_y);
+			fill_rect((t_rect){
+				(window.background.width - TILE_SIZE * map.width) / 2 + hit_point_x * TILE_SIZE,
+				(window.background.height - TILE_SIZE * map.height) / 2 + hit_point_y * TILE_SIZE,
+				10, 10},
 				window.background, (t_color){.b = 255});
 		}
 	}

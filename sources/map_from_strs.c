@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 12:24:26 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 13:15:01 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ bool	char_to_player(t_player *player, float x, float y, char c)
 bool	search_player(t_str_array lines, t_player *player)
 {
 	int		i;
-	size_t	j;
+	int		j;
 	bool	player_found;
 
 	i = 0;
@@ -85,14 +85,14 @@ bool	char_to_tile(char c, t_tile *tile)
 
 bool	parse_tiles(t_map map, t_str_array lines)
 {
-	uint32_t	i;
-	uint32_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < map.height)
 	{
 		j = 0;
-		while (j < (uint32_t) lines.strs[i].len)
+		while (j < (int) lines.strs[i].len)
 		{
 			if (!char_to_tile(lines.strs[i].str[j],
 					&map.tiles[i * map.width + j]))

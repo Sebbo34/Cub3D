@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:30:00 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 12:17:08 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 13:13:20 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <X11/X.h>
 #include <stdlib.h>
 
-bool	create_window(t_window *window, uint32_t width, uint32_t height)
+bool	create_window(t_window *window, int width, int height)
 {
 	window->mlx_context = mlx_init();
 	if (!window->mlx_context)

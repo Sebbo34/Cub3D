@@ -6,11 +6,12 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:21:11 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 11:50:37 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 16:44:00 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
+#include <math.h>
 
 void	project_ray(t_ray ray, float dist, float *out_x, float *out_y)
 {
@@ -38,6 +39,8 @@ void	display_ray(t_ray ray, t_image image)
 	current_dist = 0;
 	max_distance = ray_hit_rect(ray,
 			image.width / TILE_SIZE, image.height / TILE_SIZE);
+	if (max_distance == INFINITY)
+		return ;
 	while (current_dist < max_distance)
 	{
 		project_ray(ray, current_dist, &pixel_x, &pixel_y);

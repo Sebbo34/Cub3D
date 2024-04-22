@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:51:18 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 12:24:02 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 13:15:13 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ typedef enum e_tile_kind
 
 typedef struct s_map
 {
-	uint32_t			width;
-	uint32_t			height;
-	t_tile				*tiles;
+	int			width;
+	int			height;
+	t_tile		*tiles;
 }	t_map;
 
 bool			read_map_lines(int fd, t_str_array *lines);
@@ -65,9 +65,9 @@ bool			parse_tiles(t_map map, t_str_array lines);
 bool			parse_map(int fd, t_map *map, t_player *player);
 void			display_map(t_map map, t_image image, t_assets assets);
 
-float			ray_hit_rect(t_ray ray, uint32_t width, uint32_t height);
-float			ray_hit_vertical_lines(t_ray ray, uint32_t width);
-float			ray_hit_horizontal_lines(t_ray ray, uint32_t height);
+float			ray_hit_rect(t_ray ray, int width, int height);
+float			ray_hit_vertical_lines(t_ray ray, int width);
+float			ray_hit_horizontal_lines(t_ray ray, int height);
 void			project_ray(t_ray ray, float dist, float *out_x, float *out_y);
 void			display_ray(t_ray ray, t_image image);
 t_ray			offset_ray(t_ray ray, float offset_x, float offset_y);

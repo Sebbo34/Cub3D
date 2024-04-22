@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:41:14 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 11:44:28 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 13:13:20 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ typedef struct s_loop_context
 	t_keys		*keys;
 }	t_loop_context;
 
-bool	create_window(t_window *window, uint32_t width, uint32_t height);
+bool	create_window(t_window *window, int width, int height);
 bool	open_window(t_window *window, t_keys *keys);
 void	update_window(t_window window);
 void	close_window(t_window window);

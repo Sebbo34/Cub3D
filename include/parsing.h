@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:56:52 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 12:21:34 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 13:16:05 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 typedef struct s_str
 {
 	char	*str;
-	size_t	len;
+	int		len;
 }	t_str;
 
 typedef struct s_str_array
@@ -34,9 +34,9 @@ typedef struct s_str_array
 
 typedef struct s_buffer
 {
-	char		buffer[BUFFER_SIZE];
-	size_t		pos;
-	ssize_t		len;
+	char	buffer[BUFFER_SIZE];
+	int		pos;
+	int		len;
 }	t_buffer;
 
 enum e_read_status
@@ -48,14 +48,14 @@ enum e_read_status
 
 enum e_read_status	get_next_line(int fd, t_str *line);
 bool				get_nonempty_line(int fd, t_str *line);
-void				ft_memcpy(void *dst, void *src, size_t size);
+void				ft_memcpy(void *dst, void *src, int size);
 bool				ft_str_match(char **str, char *prefix);
 void				skip_spaces(char **str);
 bool				ft_str_match_digit(char **str, uint8_t *digit);
-bool				ft_strnchr(char *str, size_t len, char c, size_t *pos);
+bool				ft_strnchr(char *str, int len, char c, int *pos);
 
 bool				push_str(t_str_array *array, t_str str);
-uint32_t			get_max_len(t_str_array *lines);
+int					get_max_len(t_str_array *lines);
 void				free_str_array(t_str_array array);
 
 #endif

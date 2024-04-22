@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:37:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 14:16:33 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 13:19:32 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <mlx.h>
 
 bool	create_image(
-	void *mlx_context, t_image *image, uint32_t width, uint32_t height
+	void *mlx_context, t_image *image, int width, int height
 ) {
 	int	bits_per_pixel;
 	int	line_size;
@@ -45,16 +45,16 @@ bool	load_image(void *mlx_context, t_image *image, char *path)
 	return (true);
 }
 
-void	put_pixel(t_image image, uint32_t x, uint32_t y, t_color color)
+void	put_pixel(t_image image, int x, int y, t_color color)
 {
-	if (x < image.width && y < image.height)
+	if (0 <= x && x < image.width && 0 <= y && y < image.height)
 		image.pixels[y * image.width + x] = color;
 }
 
 void	put_image(t_image dest, t_image src, t_rect zone)
 {
-	uint32_t	i;
-	uint32_t	j;
+	int			i;
+	int			j;
 	t_color		pixel;
 
 	i = 0;
@@ -65,8 +65,7 @@ void	put_image(t_image dest, t_image src, t_rect zone)
 		{
 			pixel = src.pixels[i * src.height / zone.height * src.width
 				+ j * src.width / zone.width];
-			dest.pixels[(i + zone.start_y) * dest.width
-				+ j + zone.start_x] = pixel;
+			put_pixel(dest, j + zone.start_x, i + zone.start_y, pixel);
 			j++;
 		}
 		i++;

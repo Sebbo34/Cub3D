@@ -6,14 +6,14 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 12:24:21 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 13:25:48 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include <stdlib.h>
 
-bool	check_floor_closed(t_map map, uint32_t i, uint32_t j)
+bool	check_floor_closed(t_map map, int i, int j)
 {
 	if (i == map.height - 1 || map.tiles[(i + 1) * map.width + j] == TILE_VOID)
 		return (false);
@@ -28,8 +28,8 @@ bool	check_floor_closed(t_map map, uint32_t i, uint32_t j)
 
 bool	check_map(t_map map)
 {
-	uint32_t	i;
-	uint32_t	j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (i < map.height)
@@ -72,9 +72,9 @@ bool	parse_map(int fd, t_map *map, t_player *player)
 
 void	display_map(t_map map, t_image image, t_assets assets)
 {
-	t_rect		rect;
-	uint32_t	i;
-	uint32_t	j;
+	t_rect	rect;
+	int		i;
+	int		j;
 
 	fill_rect((t_rect){0, 0, image.width, image.height}, image, (t_color){0});
 	rect.width = TILE_SIZE;
@@ -82,17 +82,17 @@ void	display_map(t_map map, t_image image, t_assets assets)
 	i = 0;
 	while (i < map.height && (i + 1) * rect.height <= image.height)
 	{
-		rect.start_y = i * rect.height;
+		rect.start_y = (image.height - TILE_SIZE * map.height) / 2 + i * rect.height;
 		j = 0;
 		while (j < map.width && (j + 1) * rect.width <= image.width)
 		{
-			rect.start_x = j * rect.width;
+			rect.start_x = (image.width - TILE_SIZE * map.width) / 2 + j * rect.width;
 			if (map.tiles[i * map.width + j] == TILE_WALL)
 				put_image(image, assets.no, rect);
 			else if (map.tiles[i * map.width + j] == TILE_FLOOR)
 				fill_rect(rect, image, assets.floor);
 			else
-				fill_rect(rect, image, (t_color){0});
+				fill_rect(rect, image, assets.ceiling);
 			j++;
 		}
 		i++;

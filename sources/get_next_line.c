@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:58:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 11:59:47 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 13:14:16 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-bool	str_append(t_str *str, char *suffix, size_t len)
+bool	str_append(t_str *str, char *suffix, int len)
 {
 	char	*tmp;
 
@@ -34,7 +34,7 @@ bool	str_append(t_str *str, char *suffix, size_t len)
 enum e_read_status	get_next_line(int fd, t_str *line)
 {
 	static t_buffer	buf;
-	size_t			newline_pos;
+	int				newline_pos;
 
 	*line = (t_str){NULL, 0};
 	while (true)
