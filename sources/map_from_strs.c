@@ -6,11 +6,12 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 13:15:01 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 17:55:16 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
+#include "player.h"
 #include <stdlib.h>
 
 bool	read_map_lines(int fd, t_str_array *lines)

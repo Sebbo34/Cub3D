@@ -6,12 +6,13 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 16:13:04 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 18:11:00 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "window.h"
 #include <mlx.h>
+#include <stdio.h>
 #include <math.h>
 
 int	game_loop(t_loop_context *context)
@@ -22,55 +23,34 @@ int	game_loop(t_loop_context *context)
 	t_ray					ray;
 	float					hit_dist;
 	enum e_hit_type			hit_type;
-	float					hit_point_x;
-	float					hit_point_y;
+	int						index;
 
 	window = context->window;
 	player = &context->scene->player;
 	map = context->scene->map;
 	move_player(*context->keys, player);
 	display_map(map, window.background, context->scene->assets);
-	ray = (t_ray){player->x, player->y,
-		player->direction_x, player->direction_y};
 	fill_rect((t_rect){
-		(window.background.width - TILE_SIZE * map.width) / 2 + player->x * TILE_SIZE,
-		(window.background.height - TILE_SIZE * map.height) / 2 + player->y * TILE_SIZE,
-		5, 5},
-		window.background, (t_color){.r = 255});
-	if (0 <= player->x && player->x < map.width
-		&& 0 <= player->y && player->y < map.height)
+		(window.background.width - TILE_SIZE * map.width) / 2 + player->x * TILE_SIZE - 2,
+		(window.background.height - TILE_SIZE * map.height) / 2 + player->y * TILE_SIZE - 2,
+		4, 4},
+		window.background, (t_color){.hex = 0xFFFFFF});
+	index = 0;
+	while (index < window.background.width)
 	{
+		ray = ray_from_view_column(*player, (float) index / window.background.width);
+		// ray = (t_ray){player->x, player->y,
+		// 	player->direction_x, player->direction_y};
+		hit_type = ray_hit_map(ray, map, &hit_dist);
+		if (hit_type == HIT_IN_WALL)
+			hit_dist = 0;
+		if (hit_type == HIT_NONE)
+			hit_dist = INFINITY;
 		display_ray(offset_ray(ray,
 			-((float) window.background.width / TILE_SIZE - map.width) / 2,
 			-((float) window.background.height / TILE_SIZE - map.height) / 2),
-			window.background);
-		hit_type = ray_hit_walls(ray, map, &hit_dist);
-		if (hit_type == HIT_NS || hit_type == HIT_WE)
-		{
-			project_ray(ray, hit_dist, &hit_point_x, &hit_point_y);
-			fill_rect((t_rect){
-				(window.background.width - TILE_SIZE * map.width) / 2 + hit_point_x * TILE_SIZE,
-				(window.background.height - TILE_SIZE * map.height) / 2 + hit_point_y * TILE_SIZE,
-				10, 10},
-				window.background, (t_color){.b = 255});
-		}
-	}
-	else
-	{
-		display_ray(offset_ray(ray,
-			-((float) window.background.width / TILE_SIZE - map.width) / 2,
-			-((float) window.background.height / TILE_SIZE - map.height) / 2),
-			window.background);
-		hit_dist = ray_hit_rect(ray, map.width, map.height);
-		if (hit_dist != INFINITY)
-		{
-			project_ray(ray, hit_dist, &hit_point_x, &hit_point_y);
-			fill_rect((t_rect){
-				(window.background.width - TILE_SIZE * map.width) / 2 + hit_point_x * TILE_SIZE,
-				(window.background.height - TILE_SIZE * map.height) / 2 + hit_point_y * TILE_SIZE,
-				10, 10},
-				window.background, (t_color){.b = 255});
-		}
+			window.background, hit_dist);
+		index++;
 	}
 	update_window(window);
 	return (0);

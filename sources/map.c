@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 13:25:48 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 18:17:55 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ void	display_map(t_map map, t_image image, t_assets assets)
 	rect.width = TILE_SIZE;
 	rect.height = TILE_SIZE;
 	i = 0;
-	while (i < map.height && (i + 1) * rect.height <= image.height)
+	while (i < map.height)
 	{
 		rect.start_y = (image.height - TILE_SIZE * map.height) / 2 + i * rect.height;
 		j = 0;
-		while (j < map.width && (j + 1) * rect.width <= image.width)
+		while (j < map.width)
 		{
 			rect.start_x = (image.width - TILE_SIZE * map.width) / 2 + j * rect.width;
 			if (map.tiles[i * map.width + j] == TILE_WALL)

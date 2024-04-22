@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:57:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 17:28:42 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 18:03:32 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ enum e_hit_type	ray_hit_ns_quadrants(
 			progress.hor_dist += 1 / fabs(ray.direction_y);
 		}
 		// On verifie si la ligne verticale est avant la fin de la map
-		if (progress.vert_dist >= progress.max_dist)
+		if (progress.vert_dist >= progress.max_dist - 0.01f)
 			break ;
 		// On check le mur WE (ligne verticale)
 		if (check_wall_we(ray, progress.vert_dist, map))
@@ -82,7 +82,7 @@ enum e_hit_type	ray_hit_we_quadrants(
 				return (*hit_dist = progress.vert_dist, HIT_WE);
 			progress.vert_dist += 1 / fabs(ray.direction_x);
 		}
-		if (progress.hor_dist >= progress.max_dist)
+		if (progress.hor_dist >= progress.max_dist - 0.01f)
 			break ;
 		if (check_wall_ns(ray, progress.hor_dist, map))
 			return (*hit_dist = progress.hor_dist, HIT_NS);
@@ -99,8 +99,8 @@ enum e_hit_type	ray_hit_walls(t_ray ray, t_map map, float *hit_dist)
 		== TILE_WALL)
 		return (HIT_IN_WALL);
 	progress.max_dist = fmin(\
-		ray_hit_vertical_lines(offset_ray(ray, 0.5f, 0.5f), map.width - 1), \
-		ray_hit_horizontal_lines(offset_ray(ray, 0.5f, 0.5f), map.height - 1));
+		ray_hit_vertical_lines(ray, map.width), \
+		ray_hit_horizontal_lines(ray, map.height));
 	progress.vert_dist = ray_hit_vertical_lines(
 			offset_ray(ray, (int) ray.start_x, (int) ray.start_y), 1);
 	progress.hor_dist = ray_hit_horizontal_lines(

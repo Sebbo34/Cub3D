@@ -9,6 +9,7 @@ EA maps/wall.xpm
 
 C 30,30,30
 
+  1 1
   111
   1S1
   111

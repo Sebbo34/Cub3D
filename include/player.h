@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:55:32 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 12:21:43 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 18:09:43 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 # define PLAYER_H
 
 # include "user_input.h"
+# include "map.h"
+# define FOV 90
 
 //						In turns/frame
 # define TURNING_SPEED	0.01f
@@ -29,5 +31,6 @@ typedef struct s_player
 
 void	move_player(t_keys keys, t_player *player);
 void	turn_player(t_keys keys, t_player *player);
+t_ray	ray_from_view_column(t_player player, float ratio);
 
 #endif

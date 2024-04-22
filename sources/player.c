@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:43:41 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 12:02:56 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 17:33:00 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,22 @@ void	turn_player(t_keys keys, t_player *player)
 		- old_direction_y * rotation_sin;
 	player->direction_y = old_direction_x * rotation_sin
 		+ old_direction_y * rotation_cos;
+}
+
+t_ray	ray_from_view_column(t_player player, float ratio)
+{
+	t_ray	ray;
+	float	norm;
+	float	front;
+	float	side;
+
+	ray.start_x = player.x;
+	ray.start_y = player.y;
+	front = cos(FOV * M_PI / 360);
+	side = sin(FOV * M_PI / 360) * (2 * ratio - 1);
+	norm = sqrt(front * front + side * side);
+	ray.direction_x = (front / norm) * player.direction_x - (side / norm) * player.direction_y;
+	ray.direction_y = (front / norm) * player.direction_y + (side / norm) * player.direction_x;
+	return (ray);
+
 }
