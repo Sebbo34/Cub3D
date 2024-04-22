@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:58:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 14:15:26 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 11:59:47 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ enum e_read_status	get_next_line(int fd, t_str *line)
 	*line = (t_str){NULL, 0};
 	while (true)
 	{
-		if (ft_strnchr(&buf.buffer[buf.pos], buf.len - buf.pos, '\n', &newline_pos))
+		if (ft_strnchr(&buf.buffer[buf.pos],
+				buf.len - buf.pos, '\n', &newline_pos))
 		{
 			if (!str_append(line, &buf.buffer[buf.pos], newline_pos))
 				return (free(line->str), READ_ERROR);

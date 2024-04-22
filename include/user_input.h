@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:44:56 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 11:45:47 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 12:19:48 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct s_keys
 	bool	s;
 	bool	left;
 	bool	right;
-} t_keys;
+}	t_keys;
 
 typedef struct s_key_event_context
 {

@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:51:18 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 17:59:48 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 12:24:02 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "image.h"
 # include "assets.h"
 # include "player.h"
+# include "parsing.h"
 # include <stdint.h>
 
 # define TILE_SIZE		100
@@ -26,13 +27,6 @@ enum e_hit_type
 	HIT_WE,
 	HIT_NONE,
 	HIT_IN_WALL,
-};
-
-enum e_tile_line_status
-{
-	TILE_LINE_OK,
-	TILE_LINE_ERROR,
-	TILE_LINE_NO_FLOOR,
 };
 
 typedef struct s_ray
@@ -64,11 +58,14 @@ typedef struct s_map
 	t_tile				*tiles;
 }	t_map;
 
-// t_map			init_map(void);
+bool			read_map_lines(int fd, t_str_array *lines);
+bool			search_player(t_str_array lines, t_player *player);
+bool			parse_tiles(t_map map, t_str_array lines);
+
 bool			parse_map(int fd, t_map *map, t_player *player);
 void			display_map(t_map map, t_image image, t_assets assets);
 
-float			ray_intersect_rect(t_ray ray, uint32_t width, uint32_t height);
+float			ray_hit_rect(t_ray ray, uint32_t width, uint32_t height);
 float			ray_hit_vertical_lines(t_ray ray, uint32_t width);
 float			ray_hit_horizontal_lines(t_ray ray, uint32_t height);
 void			project_ray(t_ray ray, float dist, float *out_x, float *out_y);
@@ -76,6 +73,5 @@ void			display_ray(t_ray ray, t_image image);
 t_ray			offset_ray(t_ray ray, float offset_x, float offset_y);
 
 enum e_hit_type	ray_hit_walls(t_ray ray, t_map map, float *hit_dist);
-
 
 #endif

@@ -3,13 +3,15 @@ NAME		:= cub3D
 SRCS		:=	main.c \
 				scene.c \
 				map.c \
+				map_from_strs.c \
 				assets.c \
 				rect.c \
 				window.c \
 				ray.c \
 				ray_hit_walls.c \
+				ray_hit_rect.c \
 				player.c \
-				key_event.c \
+				event.c \
 				get_next_line.c \
 				color.c \
 				parsing.c \

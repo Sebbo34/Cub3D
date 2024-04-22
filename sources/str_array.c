@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 13:23:24 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 14:13:42 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 12:18:49 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 bool	push_str(t_str_array *array, t_str str)
 {
 	t_str	*new_strs;
-	
+
 	new_strs = malloc((array->len + 1) * sizeof(t_str));
 	if (!new_strs)
 		return (false);
@@ -26,6 +26,22 @@ bool	push_str(t_str_array *array, t_str str)
 	array->strs[array->len] = str;
 	array->len++;
 	return (true);
+}
+
+uint32_t	get_max_len(t_str_array *lines)
+{
+	int			i;
+	uint32_t	max_len;
+
+	i = 0;
+	max_len = 0;
+	while (i < lines->len)
+	{
+		if ((uint32_t) lines->strs[i].len > max_len)
+			max_len = lines->strs[i].len;
+		i++;
+	}
+	return (max_len);
 }
 
 void	free_str_array(t_str_array array)

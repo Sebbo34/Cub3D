@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 14:16:38 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 12:17:53 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "parsing.h"
 #include <stdlib.h>
 
-void free_incomplete_assets(t_incomplete_assets tmp, void *mlx_context)
+void	free_incomplete_assets(t_incomplete_assets tmp, void *mlx_context)
 {
 	if (tmp.is_found[0])
 		destroy_image(mlx_context, tmp.images[0]);
@@ -72,21 +72,22 @@ bool	parse_asset(char *line, t_incomplete_assets *assets, void *mlx_context)
 
 bool	parse_assets(int fd, t_assets *assets, void *mlx_context)
 {
-	t_incomplete_assets tmp_assets;
+	t_incomplete_assets	tmp_assets;
 	t_str				line;
-	
+
 	tmp_assets = (t_incomplete_assets){0};
 	while (tmp_assets.count < 6)
 	{
 		if (!get_nonempty_line(fd, &line))
 			return (free_incomplete_assets(tmp_assets, mlx_context), false);
 		if (!parse_asset(line.str, &tmp_assets, mlx_context))
-			return (free_incomplete_assets(tmp_assets, mlx_context), free(line.str), false);
+			return (free_incomplete_assets(tmp_assets, mlx_context),
+				free(line.str), false);
 		free(line.str);
 	}
 	ft_memcpy(assets, &tmp_assets, sizeof(t_assets));
 	return (true);
-} 
+}
 
 void	destroy_assets(t_assets assets, void *mlx_context)
 {

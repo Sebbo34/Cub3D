@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:59:15 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 11:48:33 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 12:21:01 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,15 @@
 # include <stdint.h>
 # include <stdbool.h>
 
-typedef	union 
+typedef union u_color
 {
-	struct 
-	{
+	struct {
 		uint8_t	b;
 		uint8_t	g;
 		uint8_t	r;
 	};
 	uint32_t	hex;
-} t_color;
+}	t_color;
 
 typedef struct s_image
 {

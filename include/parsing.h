@@ -6,12 +6,12 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:56:52 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 13:43:42 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 12:21:34 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef READING_H
-# define READING_H
+#ifndef PARSING_H
+# define PARSING_H
 
 # include <sys/types.h>
 # include <stdbool.h>
@@ -20,24 +20,24 @@
 //						8 KiB
 # define BUFFER_SIZE	8192
 
-typedef	struct s_str
+typedef struct s_str
 {
 	char	*str;
 	size_t	len;
-} t_str;
+}	t_str;
 
-typedef	struct s_str_array
+typedef struct s_str_array
 {
 	t_str	*strs;
 	int		len;
-} t_str_array;
+}	t_str_array;
 
-typedef	struct s_buffer
+typedef struct s_buffer
 {
 	char		buffer[BUFFER_SIZE];
 	size_t		pos;
 	ssize_t		len;
-} t_buffer;
+}	t_buffer;
 
 enum e_read_status
 {
@@ -55,6 +55,7 @@ bool				ft_str_match_digit(char **str, uint8_t *digit);
 bool				ft_strnchr(char *str, size_t len, char c, size_t *pos);
 
 bool				push_str(t_str_array *array, t_str str);
+uint32_t			get_max_len(t_str_array *lines);
 void				free_str_array(t_str_array array);
 
 #endif

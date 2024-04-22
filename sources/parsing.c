@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:51:48 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 11:54:55 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 12:18:08 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_memcpy(void *dst, void *src, size_t size)
 bool	ft_str_match(char **str, char *prefix)
 {
 	size_t	i;
-	
+
 	i = 0;
 	while (prefix[i])
 	{

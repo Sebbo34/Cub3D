@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:41:14 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 11:44:26 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 11:44:28 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,6 @@ bool	open_window(t_window *window, t_keys *keys);
 void	update_window(t_window window);
 void	close_window(t_window window);
 void	destroy_window(t_window window);
+int		cross_event(t_window *window);
 
 #endif

@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_event.c                                        :+:      :+:    :+:   */
+/*   event.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:02:47 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/18 12:05:12 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/22 12:19:02 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "user_input.h"
+#include "window.h"
 #include <mlx.h>
 #include <X11/keysym.h>
 
+int	cross_event(t_window *window)
+{
+	mlx_loop_end(window->mlx_context);
+	return (0);
+}
+
 int	key_press(int keycode, t_key_event_context *context)
 {
-	if (keycode == XK_Escape)	
+	if (keycode == XK_Escape)
 		return (mlx_loop_end(context->mlx_context));
 	else if (keycode == XK_w)
 		context->keys->w = true;
