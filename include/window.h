@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:41:14 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 13:13:20 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/23 19:30:30 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include "scene.h"
 # include "user_input.h"
 # include <stdint.h>
+
+# define WINDOW_WIDTH	1920
+# define WINDOW_HEIGHT	1080
 
 typedef struct s_window
 {

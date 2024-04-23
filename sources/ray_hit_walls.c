@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:57:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 18:03:32 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/23 13:58:21 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ enum e_hit_type	ray_hit_ns_quadrants(
 		// On avance vert_dist sur la prochaine ligne verticale (possiblement hors map)
 		progress.vert_dist += 1 / fabs(ray.direction_x);
 	}
-	return (HIT_NONE);
+	return (*hit_dist = INFINITY, HIT_NONE);
 }
 
 enum e_hit_type	ray_hit_we_quadrants(
@@ -88,7 +88,7 @@ enum e_hit_type	ray_hit_we_quadrants(
 			return (*hit_dist = progress.hor_dist, HIT_NS);
 		progress.hor_dist += 1 / fabs(ray.direction_y);
 	}
-	return (HIT_NONE);
+	return (*hit_dist = INFINITY, HIT_NONE);
 }
 
 enum e_hit_type	ray_hit_walls(t_ray ray, t_map map, float *hit_dist)
@@ -97,10 +97,8 @@ enum e_hit_type	ray_hit_walls(t_ray ray, t_map map, float *hit_dist)
 
 	if (map.tiles[(int) ray.start_y * map.width + (int) ray.start_x]
 		== TILE_WALL)
-		return (HIT_IN_WALL);
-	progress.max_dist = fmin(\
-		ray_hit_vertical_lines(ray, map.width), \
-		ray_hit_horizontal_lines(ray, map.height));
+		return (*hit_dist = 0, HIT_IN_WALL);
+	progress.max_dist = ray_hit_rect_inside(ray, map.width, map.height);
 	progress.vert_dist = ray_hit_vertical_lines(
 			offset_ray(ray, (int) ray.start_x, (int) ray.start_y), 1);
 	progress.hor_dist = ray_hit_horizontal_lines(

@@ -9,7 +9,8 @@ SRCS		:=	main.c \
 				window.c \
 				ray.c \
 				ray_hit_walls.c \
-				ray_hit_rect.c \
+				ray_hit_rect_inside.c \
+				ray_hit_rect_outside.c \
 				player.c \
 				event.c \
 				get_next_line.c \
@@ -22,9 +23,10 @@ OBJS		:= $(SRCS:.c=.o)
 SRCS		:= $(addprefix sources/,$(SRCS))
 OBJS		:= $(addprefix build/,$(OBJS))
 
-CFLAGS		:= -Wall -Wextra -Werror -g
+CC			:= gcc
+CFLAGS		:= -Wall -Wextra -Werror
 CPPFLAGS	:= -Iinclude -Iminilibx-linux
-LDFLAGS		:= -lX11 -lXext -Lminilibx-linux -lmlx -lm
+LDFLAGS		:= -Lminilibx-linux -lmlx -lm -lX11 -lXext
 
 all: $(NAME)
 
@@ -39,6 +41,7 @@ minilibx-linux/libmlx.a:
 	$(MAKE) -C minilibx-linux
 
 clean:
+	$(MAKE) -C minilibx-linux clean
 	rm -rf build
 
 fclean: clean

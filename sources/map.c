@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 18:17:55 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/23 18:53:20 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,33 +68,4 @@ bool	parse_map(int fd, t_map *map, t_player *player)
 	if (!check_map(*map))
 		return (free(map->tiles), false);
 	return (true);
-}
-
-void	display_map(t_map map, t_image image, t_assets assets)
-{
-	t_rect	rect;
-	int		i;
-	int		j;
-
-	fill_rect((t_rect){0, 0, image.width, image.height}, image, (t_color){0});
-	rect.width = TILE_SIZE;
-	rect.height = TILE_SIZE;
-	i = 0;
-	while (i < map.height)
-	{
-		rect.start_y = (image.height - TILE_SIZE * map.height) / 2 + i * rect.height;
-		j = 0;
-		while (j < map.width)
-		{
-			rect.start_x = (image.width - TILE_SIZE * map.width) / 2 + j * rect.width;
-			if (map.tiles[i * map.width + j] == TILE_WALL)
-				put_image(image, assets.no, rect);
-			else if (map.tiles[i * map.width + j] == TILE_FLOOR)
-				fill_rect(rect, image, assets.floor);
-			else
-				fill_rect(rect, image, assets.ceiling);
-			j++;
-		}
-		i++;
-	}
 }

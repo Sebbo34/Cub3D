@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:51:18 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 18:02:47 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/23 18:53:38 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,17 +64,23 @@ bool			search_player(t_str_array lines, t_player *player);
 bool			parse_tiles(t_map map, t_str_array lines);
 
 bool			parse_map(int fd, t_map *map, t_player *player);
-void			display_map(t_map map, t_image image, t_assets assets);
 
-float			ray_hit_rect(t_ray ray, int width, int height);
+// ray_hit_rect_inside.c
+float			ray_hit_rect_inside(t_ray ray, int width, int height);
 float			ray_hit_vertical_lines(t_ray ray, int width);
 float			ray_hit_horizontal_lines(t_ray ray, int height);
-void			project_ray(t_ray ray, float dist, float *out_x, float *out_y);
-void			display_ray(t_ray ray, t_image image, float dist);
-t_ray			offset_ray(t_ray ray, float offset_x, float offset_y);
 
-enum e_hit_type	ray_hit_walls(t_ray ray, t_map map, float *hit_dist);
+// ray_hit_rect_outside.c
+enum e_hit_type	ray_hit_rect_outside(t_ray ray, int width, int height,
+					float *dist);
+
+// ray.c
+void			project_ray(t_ray ray, float dist, float *out_x, float *out_y);
+t_ray			offset_ray(t_ray ray, float offset_x, float offset_y);
 enum e_hit_type	ray_hit_map(t_ray ray, t_map map, float *hit_dist);
+
+// ray_hit_walls.c
+enum e_hit_type	ray_hit_walls(t_ray ray, t_map map, float *hit_dist);
 
 
 #endif
