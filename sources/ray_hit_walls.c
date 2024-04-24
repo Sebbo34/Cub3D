@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:57:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/24 11:55:20 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:50:34 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ enum e_hit_type	ray_hit_ns_quadrants(
 ) {
 	while (true)
 	{
-		// On avance hor_dist jusqu'a la prochaine ligne verticale (ou la fin de la map)
 		while (progress.hor_dist < progress.max_dist - 0.01f
 			&& progress.hor_dist < progress.vert_dist)
 		{
@@ -58,13 +57,10 @@ enum e_hit_type	ray_hit_ns_quadrants(
 				return (*hit_dist = progress.hor_dist, HIT_NS);
 			progress.hor_dist += 1 / fabs(ray.direction_y);
 		}
-		// On verifie si la ligne verticale est avant la fin de la map
 		if (progress.vert_dist >= progress.max_dist - 0.01f)
 			break ;
-		// On check le mur WE (ligne verticale)
 		if (check_wall_we(ray, progress.vert_dist, map))
 			return (*hit_dist = progress.vert_dist, HIT_WE);
-		// On avance vert_dist sur la prochaine ligne verticale (possiblement hors map)
 		progress.vert_dist += 1 / fabs(ray.direction_x);
 	}
 	return (*hit_dist = INFINITY, HIT_NONE);

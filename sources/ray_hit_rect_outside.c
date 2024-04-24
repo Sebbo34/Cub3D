@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:21:11 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/23 11:36:47 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:55:35 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,22 @@ float	vert_dist_hor_band(t_ray ray, int height)
 		return ((height - ray.start_y));
 	return (INFINITY);
 }
-enum e_hit_type	ray_hit_rect_outside(t_ray ray, int width, int height, float *dist)
-{
+
+enum e_hit_type	ray_hit_rect_outside(
+	t_ray ray, int width, int height, float *dist
+) {
 	float	vert_dist;
 	float	hor_dist;
 
 	hor_dist = hor_dist_vert_band(ray, width)
 		* (ray.direction_y / ray.direction_x) + ray.start_y;
 	if (0 <= hor_dist && hor_dist < height)
-		return (*dist = hor_dist_vert_band(ray, width) / ray.direction_x, HIT_WE);
+		return (*dist = hor_dist_vert_band(ray, width)
+			/ ray.direction_x, HIT_WE);
 	vert_dist = vert_dist_hor_band(ray, height)
 		* (ray.direction_x / ray.direction_y) + ray.start_x;
 	if (0 <= vert_dist && vert_dist < width)
-		return (*dist = vert_dist_hor_band(ray, height) / ray.direction_y, HIT_NS);
+		return (*dist = vert_dist_hor_band(ray, height)
+			/ ray.direction_y, HIT_NS);
 	return (*dist = INFINITY, HIT_NONE);
 }

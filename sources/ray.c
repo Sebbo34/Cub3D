@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:21:11 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/24 12:12:05 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:49:59 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ enum e_hit_type	ray_hit_map(t_ray ray, t_map map, float *hit_dist)
 	if (ray.start_x < 0 || map.width <= ray.start_x
 		|| ray.start_y < 0 || map.height <= ray.start_y)
 	{
-		outside_hit_type = ray_hit_rect_outside(ray, map.width, map.height, &outside_dist);
+		outside_hit_type = ray_hit_rect_outside(ray, map.width,
+				map.height, &outside_dist);
 		if (outside_hit_type == HIT_NONE)
 			return (*hit_dist = INFINITY, HIT_NONE);
 		project_ray(ray, outside_dist + 0.01f, &ray.start_x, &ray.start_y);

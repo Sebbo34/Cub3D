@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:37:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/24 13:13:54 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:51:28 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,15 +48,15 @@ bool	load_image(void *mlx_context, t_image *image, char *path)
 
 void	put_pixel(t_image image, int x, int y, t_color color)
 {
-	// if (0 <= x && x < image.width && 0 <= y && y < image.height)
+	if (0 <= x && x < image.width && 0 <= y && y < image.height)
 		image.pixels[y * image.width + x] = color;
 }
 
 t_color	get_pixel(t_image image, int x, int y)
 {
-	// if (0 <= x && x < image.width && 0 <= y && y < image.height)
+	if (0 <= x && x < image.width && 0 <= y && y < image.height)
 		return (image.pixels[y * image.width + x]);
-	// return ((t_color){0});
+	return ((t_color){0});
 }
 
 void	destroy_image(void *mlx_context, t_image image)

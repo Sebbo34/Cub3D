@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/24 12:57:51 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:50:47 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-bool ft_str_equals(char *a, char *b)
+bool	ft_str_equals(char *a, char *b)
 {
 	int	i;
 

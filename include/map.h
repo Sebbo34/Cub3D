@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:51:18 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/23 18:53:38 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:57:21 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ typedef struct s_map
 	t_tile		*tiles;
 }	t_map;
 
-typedef struct s_player t_player;
+typedef struct s_player	t_player;
 
 bool			read_map_lines(int fd, t_str_array *lines);
 bool			search_player(t_str_array lines, t_player *player);
@@ -81,6 +81,5 @@ enum e_hit_type	ray_hit_map(t_ray ray, t_map map, float *hit_dist);
 
 // ray_hit_walls.c
 enum e_hit_type	ray_hit_walls(t_ray ray, t_map map, float *hit_dist);
-
 
 #endif

@@ -1,6 +1,7 @@
 NAME		:= cub3D
 
 SRCS		:=	main.c \
+				column.c \
 				scene.c \
 				map.c \
 				map_from_strs.c \

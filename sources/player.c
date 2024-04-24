@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:43:41 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/24 12:32:32 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:50:25 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ t_ray	ray_from_view_column(t_player player, float ratio)
 	front = cos(FOV * M_PI / 360);
 	side = sin(FOV * M_PI / 360) * (2 * ratio - 1);
 	norm = sqrt(front * front + side * side);
-	ray.direction_x = (front / norm) * player.direction_x - (side / norm) * player.direction_y;
-	ray.direction_y = (front / norm) * player.direction_y + (side / norm) * player.direction_x;
+	ray.direction_x = (front / norm) * player.direction_x
+		- (side / norm) * player.direction_y;
+	ray.direction_y = (front / norm) * player.direction_y
+		+ (side / norm) * player.direction_x;
 	return (ray);
-
 }

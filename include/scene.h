@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:47:56 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/19 17:59:05 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:54:46 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ typedef struct s_scene
 
 bool		load_scene(char *path, t_scene *scene, void *mlx_context);
 void		destroy_scene(t_scene scene, void *mlx_context);
+void		display_column(t_scene scene, t_image background, int index);
 
 #endif
