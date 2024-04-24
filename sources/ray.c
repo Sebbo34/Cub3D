@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 17:21:11 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/23 18:53:43 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 12:12:05 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ enum e_hit_type	ray_hit_map(t_ray ray, t_map map, float *hit_dist)
 	float			outside_dist;
 	enum e_hit_type	outside_hit_type;
 	enum e_hit_type	inside_hit_type;
+
 	if (ray.start_x < 0 || map.width <= ray.start_x
 		|| ray.start_y < 0 || map.height <= ray.start_y)
 	{
@@ -41,6 +42,9 @@ enum e_hit_type	ray_hit_map(t_ray ray, t_map map, float *hit_dist)
 		if (outside_hit_type == HIT_NONE)
 			return (*hit_dist = INFINITY, HIT_NONE);
 		project_ray(ray, outside_dist + 0.01f, &ray.start_x, &ray.start_y);
+		if (ray.start_x < 0 || map.width <= ray.start_x
+			|| ray.start_y < 0 || map.height <= ray.start_y)
+			return (*hit_dist = INFINITY, HIT_NONE);
 		*hit_dist = 0;
 		inside_hit_type = ray_hit_walls(ray, map, hit_dist);
 		*hit_dist += outside_dist;

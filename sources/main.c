@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/23 19:26:23 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 11:52:18 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@
 void	draw_column(t_image_column dest, t_image_column src, float dest_height)
 {
 	t_color		pixel;
-	const float	capped_dest_height = fmin(dest_height, dest.image.height);
-	const float	const_a = (dest_height - capped_dest_height) / 2;
-	const float	const_b = (dest.image.height - capped_dest_height) / 2;
-	const float	const_c = src.image.height / dest_height;
+	const int	capped_dest_height = fmin(dest_height, dest.image.height);
+	const int	src_offset = (dest_height - capped_dest_height) / 2;
+	const int	dest_offset = (dest.image.height - capped_dest_height) / 2;
+	const float	src_ratio = src.image.height / dest_height;
 	int			i;
 
 	i = 0;
 	while (i < capped_dest_height)
 	{
 		pixel = get_pixel(src.image, src.index,
-				(i + const_a) * const_c);
+				(i + src_offset) * src_ratio);
 		put_pixel(dest.image, dest.index,
-			i + const_b, pixel);
+			i + dest_offset, pixel);
 		i++;
 	}
 }
@@ -95,15 +95,34 @@ void	display_column(t_scene scene, t_image background, int index)
 	}
 }
 
+void	fill_background(
+	t_player player, t_map map, t_image background, t_assets assets
+) {
+	if (0 <= player.x && player.x < map.width
+		&& 0 <= player.y && player.y < map.height
+		&& map.tiles[(int) player.y * map.width + (int) player.x] == TILE_FLOOR)
+	{
+		fill_rect((t_rect){0, 0, background.width, background.height / 2},
+			background, assets.ceiling);
+		fill_rect((t_rect){0, background.height / 2, background.width,
+			background.height / 2}, background, assets.floor);
+	}
+	else
+	{
+		fill_rect((t_rect){0, 0, background.width, background.height},
+			background, (t_color){0});
+	}
+}
+
 int	game_loop(t_loop_context *context)
 {
-	t_image					background;
-	int						index;
+	t_image		background;
+	int			index;
 
 	background = context->window.background;
 	move_player(*context->keys, &context->scene->player);
-	fill_rect((t_rect){0, 0, background.width, background.height}, background,
-		(t_color){0});
+	fill_background(context->scene->player, context->scene->map, background,
+		context->scene->assets);
 	index = 0;
 	while (index < background.width)
 	{
