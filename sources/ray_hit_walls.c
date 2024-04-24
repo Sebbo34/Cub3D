@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:57:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/24 13:50:34 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 14:28:06 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ bool	check_wall_ns(t_ray ray, float dist, t_map map)
 	float	check_x;
 	float	check_y;
 
-	project_ray(ray, dist, &check_x, &check_y);
+	project_ray(ray, dist + 0.0001f, &check_x, &check_y);
 	if (ray.direction_y > 0)
 		check_y += 0.5f;
 	else
@@ -32,7 +32,7 @@ bool	check_wall_we(t_ray ray, float dist, t_map map)
 	float	check_x;
 	float	check_y;
 
-	project_ray(ray, dist, &check_x, &check_y);
+	project_ray(ray, dist + 0.0001f, &check_x, &check_y);
 	if (ray.direction_x > 0)
 		check_x += 0.5f;
 	else

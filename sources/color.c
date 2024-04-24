@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:47:19 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/24 13:51:05 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 15:09:16 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,13 @@ bool	parse_color(t_color *color, char *line)
 
 	if (
 		!parse_intensity(&color->r, &line)
+		|| (skip_spaces(&line), 0)
 		|| !ft_str_match(&line, ",")
+		|| (skip_spaces(&line), 0)
 		|| !parse_intensity(&color->g, &line)
+		|| (skip_spaces(&line), 0)
 		|| !ft_str_match(&line, ",")
+		|| (skip_spaces(&line), 0)
 		|| !parse_intensity(&color->b, &line)
 		|| !*line == '\0'
 	)
