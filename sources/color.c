@@ -6,12 +6,13 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:47:19 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 12:17:58 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:18:10 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "image.h"
 #include "parsing.h"
+#include <stdio.h>
 
 bool	parse_intensity(uint8_t *intensity, char **line)
 {
@@ -33,12 +34,16 @@ bool	parse_intensity(uint8_t *intensity, char **line)
 
 bool	parse_color(t_color *color, char *line)
 {
-	return (
-		parse_intensity(&color->r, &line)
-		&& ft_str_match(&line, ",")
-		&& parse_intensity(&color->g, &line)
-		&& ft_str_match(&line, ",")
-		&& parse_intensity(&color->b, &line)
-		&& *line == '\0'
-	);
+	char *const color_save = line;
+
+	if (
+		!parse_intensity(&color->r, &line)
+		|| !ft_str_match(&line, ",")
+		|| !parse_intensity(&color->g, &line)
+		|| !ft_str_match(&line, ",")
+		|| !parse_intensity(&color->b, &line)
+		|| !*line == '\0'
+	)
+		return (printf("Error\n%s: Invalid color\n", color_save), false);
+	return (true);
 }

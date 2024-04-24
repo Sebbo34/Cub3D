@@ -6,12 +6,13 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/23 18:53:20 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:37:59 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 bool	check_floor_closed(t_map map, int i, int j)
 {
@@ -40,7 +41,8 @@ bool	check_map(t_map map)
 			if (map.tiles[i * map.width + j] == TILE_FLOOR)
 			{
 				if (!check_floor_closed(map, i, j))
-					return (false);
+					return (printf("Error\nLine %d, Column %d: "
+							"Unclosed map\n", i + 1, j + 1), false);
 			}
 			j++;
 		}
@@ -61,7 +63,7 @@ bool	parse_map(int fd, t_map *map, t_player *player)
 	map->height = lines.len;
 	map->tiles = malloc(map->width * map->height * sizeof(t_tile));
 	if (!map->tiles)
-		return (free_str_array(lines), false);
+		return (free_str_array(lines), printf("Error\nOut of memory\n"), false);
 	if (!parse_tiles(*map, lines))
 		return (free(map->tiles), free_str_array(lines), false);
 	free_str_array(lines);

@@ -6,13 +6,14 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 14:31:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 17:55:16 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:33:58 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "map.h"
 #include "player.h"
 #include <stdlib.h>
+#include <stdio.h>
 
 bool	read_map_lines(int fd, t_str_array *lines)
 {
@@ -63,13 +64,16 @@ bool	search_player(t_str_array lines, t_player *player)
 			if (char_to_player(player, j + 0.5, i + 0.5, lines.strs[i].str[j]))
 			{
 				if (player_found)
-					return (false);
+					return (printf("Error\nLine %d, Column %d: "
+							"Multiple players found\n", i + 1, j + 1), false);
 				player_found = true;
 			}
 			j++;
 		}
 		i++;
 	}
+	if (!player_found)
+		printf("Error\nNo player found\n");
 	return (player_found);
 }
 
@@ -97,7 +101,8 @@ bool	parse_tiles(t_map map, t_str_array lines)
 		{
 			if (!char_to_tile(lines.strs[i].str[j],
 					&map.tiles[i * map.width + j]))
-				return (false);
+				return (printf("Error\nLine %d, Column %d: "
+						"Invalid character in map\n", i + 1, j + 1), false);
 			j++;
 		}
 		while (j < map.width)

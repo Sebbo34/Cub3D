@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 12:58:08 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 13:14:16 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:42:58 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include <unistd.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 bool	str_append(t_str *str, char *suffix, int len)
 {
@@ -43,16 +44,16 @@ enum e_read_status	get_next_line(int fd, t_str *line)
 				buf.len - buf.pos, '\n', &newline_pos))
 		{
 			if (!str_append(line, &buf.buffer[buf.pos], newline_pos))
-				return (free(line->str), READ_ERROR);
+				return (free(line->str), printf(MEM_ERROR_MESSAGE), READ_ERROR);
 			buf.pos += newline_pos + 1;
 			return (READ_OK);
 		}
 		if (!str_append(line, &buf.buffer[buf.pos], buf.len - buf.pos))
-			return (free(line->str), READ_ERROR);
+			return (free(line->str), printf(MEM_ERROR_MESSAGE), READ_ERROR);
 		buf.pos = 0;
 		buf.len = read(fd, buf.buffer, BUFFER_SIZE);
 		if (buf.len < 0)
-			return (free(line->str), READ_ERROR);
+			return (free(line->str), printf(READ_ERROR_MESSAGE), READ_ERROR);
 		if (buf.len == 0 && !line->len)
 			return (free(line->str), READ_END);
 		if (buf.len == 0)

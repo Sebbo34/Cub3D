@@ -6,12 +6,13 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:37:22 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/23 19:21:07 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:13:54 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "image.h"
 #include <mlx.h>
+#include <stdio.h>
 
 bool	create_image(
 	void *mlx_context, t_image *image, int width, int height
@@ -39,7 +40,7 @@ bool	load_image(void *mlx_context, t_image *image, char *path)
 	image->mlx_image = mlx_xpm_file_to_image(mlx_context, path,
 			(int *) &image->width, (int *) &image->height);
 	if (!image->mlx_image)
-		return (false);
+		return (printf("Error\n%s: Invalid texture\n", path), false);
 	image->pixels = (t_color *) mlx_get_data_addr(image->mlx_image,
 			&bits_per_pixel, &line_size, &endian);
 	return (true);

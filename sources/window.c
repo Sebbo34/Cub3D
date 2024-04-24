@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:30:00 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 13:13:20 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:43:21 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 #include <mlx.h>
 #include <X11/X.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 bool	create_window(t_window *window, int width, int height)
 {
 	window->mlx_context = mlx_init();
 	if (!window->mlx_context)
-		return (false);
+		return (printf("Error\nWindow creation failed\n"), false);
 	if (!create_image(window->mlx_context, &window->background, width, height))
 	{
 		mlx_destroy_display(window->mlx_context);
@@ -36,7 +37,7 @@ bool	open_window(t_window *window, t_keys *keys)
 	window->window = mlx_new_window(window->mlx_context,
 			window->background.width, window->background.height, "Cub3D");
 	if (!window->window)
-		return (false);
+		return (printf("Error\nWindow creation failed\n"), false);
 	mlx_hook(window->window, DestroyNotify, 1L << 0, cross_event, window);
 	key_context.keys = keys;
 	key_context.mlx_context = window->mlx_context;

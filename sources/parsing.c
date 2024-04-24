@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 11:51:48 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 13:13:57 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:03:18 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,5 +67,5 @@ bool	ft_strnchr(char *str, int len, char c, int *pos)
 			return (*pos = i, true);
 		i++;
 	}
-	return (false);
+	return (*pos = i, false);
 }

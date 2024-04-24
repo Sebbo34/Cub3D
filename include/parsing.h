@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 11:56:52 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 13:16:05 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:42:19 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@
 # include <stdbool.h>
 # include <stdint.h>
 
-//						8 KiB
-# define BUFFER_SIZE	8192
+//								8 KiB
+# define BUFFER_SIZE			8192
+# define MEM_ERROR_MESSAGE		"Error\nOut of memory\n"
+# define READ_ERROR_MESSAGE		"Error\nFile is no longer valid\n"
 
 typedef struct s_str
 {

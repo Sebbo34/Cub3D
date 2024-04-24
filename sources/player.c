@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 11:43:41 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/22 17:33:00 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 12:32:32 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 
 void	move_player(t_keys keys, t_player *player)
 {
-	float	forward_movement;
-	float	side_movement;
+	float		forward_movement;
+	float		side_movement;
+	const float	diag_coef = sqrtf(2) / 2;
 
 	forward_movement = keys.w - keys.s;
 	side_movement = keys.d - keys.a;
+	if (forward_movement)
+		side_movement *= diag_coef;
+	if (side_movement)
+		forward_movement *= diag_coef;
 	player->x += forward_movement * player->direction_x * WALKING_SPEED;
 	player->y += forward_movement * player->direction_y * WALKING_SPEED;
 	player->x += side_movement * -player->direction_y * WALKING_SPEED;

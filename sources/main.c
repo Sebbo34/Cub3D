@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 11:24:49 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/24 11:52:18 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/24 13:46:20 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,8 @@ int	main(int argc, char **argv)
 	t_keys			keys;
 
 	keys = (t_keys){0};
+	if (argc != 2)
+		return (printf("Error\n%s expects a map argument\n", argv[0]), 1);
 	if (!create_window(&window, WINDOW_WIDTH, WINDOW_HEIGHT))
 		return (1);
 	if (argc != 2 || !load_scene(argv[1], &scene, window.mlx_context))
