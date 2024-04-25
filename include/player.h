@@ -6,7 +6,7 @@
 /*   By: sbo <sbo@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 17:55:32 by sbo               #+#    #+#             */
-/*   Updated: 2024/04/24 11:43:57 by sbo              ###   ########.fr       */
+/*   Updated: 2024/04/25 11:38:29 by sbo              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@
 # define FOV 90
 
 //						In turns/frame
-# define TURNING_SPEED	0.01f
-# define WALKING_SPEED	0.06f
+# define TURNING_SPEED	0.005f
+# define WALKING_SPEED	0.03f
 
 typedef struct s_player
 {
